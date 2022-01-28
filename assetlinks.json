@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "io.github.vkoskinen.twa",
+                     "sha256_cert_fingerprints": ["66:6E:3D:8C:49:A0:3F:39:3B:E8:24:A8:E4:3A:8F:52:4D:EE:15:F4:63:08:03:25:66:CA:30:38:38:3C:B0:FA"] }
+      }
+]
