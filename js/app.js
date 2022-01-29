@@ -108,13 +108,24 @@
 		}
 	).addTo(map);
 	
+		var miniMap = new L.Control.MiniMap(maastokarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
+
+		L.Routing.control({
+			waypoints: [
+				L.latLng(57.74, 11.94),
+				L.latLng(57.6792, 11.949)
+			],
+			routeWhileDragging: true,
+			geocoder: L.Control.Geocoder.nominatim()
+		}).addTo(map);
+	
 	//Specify the layer for which you want to modify the opacity. Note that the setOpacityLayer() method applies to all the controls.
 	//You only need to call it once. 
 	//var opacitySlider = new L.Control.opacitySlider();
     //map.addControl(opacitySlider);
     //opacitySlider.setOpacityLayer(stand);
 
-	var miniMap = new L.Control.MiniMap(maastokarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
+
 
 	// L.control.locate().addTo(map);
 	// 	var position= L.Control.geocoder({
@@ -159,3 +170,25 @@
 			 map.removeControl(chmLegend);
 		} 
 	});
+
+	L.Routing.control({
+		waypoints: [],
+		language: 'fi',
+		collapsible: undefined,
+		routeWhileDragging: true,
+		reverseWaypoints: true,
+		geocoder: L.Control.Geocoder.nominatim(),
+		router: new L.Routing.Here('eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8',{
+		urlParameters: {
+			mode: 'shortest;car',
+			avoid: 'dirtRoad'
+		}})
+		//router: L.Routing.mapbox('pk.eyJ1IjoidmVzcSIsImEiOiJjazdycjhwNnEwNmhzM3BwY3dzb2VocjB3In0.5v1gD0iaeanchGkPLGt6Rg', {
+		//urlParameters: {
+		//    vehicle: 'car'
+		//}})
+		//router: L.Routing.graphHopper('8e839e40-7f9d-4487-8ebd-5eb3185339b3', {
+		// urlParameters: {
+		//    vehicle: 'car'
+		//}})
+		}).addTo(map);
