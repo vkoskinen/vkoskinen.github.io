@@ -22,24 +22,30 @@
     <link rel="manifest" href="manifest.json">
 	
 	<!-- Load Leaflet -->
-    <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-    <script src="./node_modules/leaflet/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <link rel="stylesheet" href="./js/leaflet/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="./js/leaflet/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
 	<!-- Load proj4 -->
-    <script src="node_modules/proj4/dist/proj4.js"></script>
+    <script src="js/proj4/dist/proj4.js"></script>
 	<script src="js/proj4leaflet-refactored.js"></script>
     <script src="js/mmlLayers.js"></script>  
 	
 	<!-- GetFeature -->
-	<script src="node_modules/jquery-1.10.2/jquery-1.10.2.min.js"></script>
+	<script src="js/jquery-1.10.2/jquery-1.10.2.min.js"></script>
 	<script src="js/L.TileLayer.BetterWMS.js"></script>
 	
 	<!-- Minimap -->
-	<link rel="stylesheet" href="node_modules/leaflet-minimap/dist/Control.MiniMap.min.css" />
-	<script src="node_modules/leaflet-minimap/dist/Control.MiniMap.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="js/leaflet-minimap/dist/Control.MiniMap.min.css" />
+	<script src="js/leaflet-minimap/dist/Control.MiniMap.min.js" type="text/javascript"></script>
 	
 	<!-- Offline -->
-	<script src="node_modules/leaflet.offline/src/index.js" type="text/javascript"></script>
+	<script type="module">
+		import { openDB, deleteDB, wrap, unwrap } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
+	  
+		async function doDatabaseStuff() {
+		  const db = await openDB(…);
+		}
+	  </script>
 
 </head>
 <body>
