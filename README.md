@@ -1,2 +1,2 @@
-# vkoskinen.github.io
-map-app-pwa
+# leaflet-map-project
+A JavaScript project
