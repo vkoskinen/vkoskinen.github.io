@@ -2,7 +2,7 @@
   "name": "leaflet-map-project",
   "version": "1.0.0",
   "description": "A JavaScript project",
-  "main": "./index.js",
+  "main": "./index.html",
   "scripts": {
     "start": "node ./node_modules/parcel-bundler/bin/cli serve ./src/index.html --port 8080",
     "build": "node ./node_modules/parcel-bundler/bin/cli build ./src/index.html --out-dir ./dist/",
