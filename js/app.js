@@ -108,41 +108,33 @@
 		}
 	).addTo(map);
 	
-	L.control.coordinates({
-			position:"bottomleft",
-			useDMS:true,
-			labelTemplateLat:"N {y}",
-			labelTemplateLng:"E {x}",
-			useLatLngOrder:true
-	}).addTo(map);
-
 	//Specify the layer for which you want to modify the opacity. Note that the setOpacityLayer() method applies to all the controls.
 	//You only need to call it once. 
-	var opacitySlider = new L.Control.opacitySlider();
-    map.addControl(opacitySlider);
-    opacitySlider.setOpacityLayer(stand);
+	//var opacitySlider = new L.Control.opacitySlider();
+    //map.addControl(opacitySlider);
+    //opacitySlider.setOpacityLayer(stand);
 
 	var miniMap = new L.Control.MiniMap(maastokarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
 
-	L.control.locate().addTo(map);
-		var position= L.Control.geocoder({
-		position: 'bottomleft',
-		attribution:'Powered by',
-		collapsed: true,
-		placeholder: 'Hae...',
-		defaultMarkGeocode: true,
-		showResultIcons: true,
-		showUniqueResult: true,
-		minZoom: 16,
-		autocomplete:false,
-		geocoder: L.Control.Geocoder.pelias({
-		  serviceUrl: 'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v1/pelias/search?',
-		  geocodingQueryParams: {
-			'api-key':'a8a60737-7849-4969-a55e-7b83db77e13a',
-			'sources': 'geographic-names'
-		  }
-		})
-	}).addTo(map);  
+	// L.control.locate().addTo(map);
+	// 	var position= L.Control.geocoder({
+	// 	position: 'bottomleft',
+	// 	attribution:'Powered by',
+	// 	collapsed: true,
+	// 	placeholder: 'Hae...',
+	// 	defaultMarkGeocode: true,
+	// 	showResultIcons: true,
+	// 	showUniqueResult: true,
+	// 	minZoom: 16,
+	// 	autocomplete:false,
+	// 	geocoder: L.Control.Geocoder.pelias({
+	// 	  serviceUrl: 'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v1/pelias/search?',
+	// 	  geocodingQueryParams: {
+	// 		'api-key':'a8a60737-7849-4969-a55e-7b83db77e13a',
+	// 		'sources': 'geographic-names'
+	// 	  }
+	// 	})
+	// }).addTo(map);  
 	
 	map.on('overlayadd', function (eventLayer) {
 		if (eventLayer.name === 'Erityisen tärkeät elinympäristöt') {
