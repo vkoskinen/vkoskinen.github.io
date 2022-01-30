@@ -112,8 +112,6 @@
 		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}.', layer.feature.properties);
 	  });
 
-
-
-	//   disturbances.bindPopup(function (layer) {
-	// 	return L.Util.template('<p>Earthquake <strong>{name}</strong> occured on {mo}/{dy}/{year_}.  It had a magnitude of {magnitude}.</p>', layer.feature.properties);
-	//   });
+	disturbances.bindPopup(function (layer) {
+		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}.', layer.feature.properties);
+	});
