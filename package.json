@@ -25,6 +25,7 @@
     "jquery-1.10.2": "^1.10.2",
     "leaflet": "^1.7.1",
     "leaflet-minimap": "^3.6.1",
+    "leaflet.locatecontrol": "^0.76.0",
     "leaflet.offline": "^2.1.0",
     "proj4": "^2.7.5"
   }

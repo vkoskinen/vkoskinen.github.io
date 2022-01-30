@@ -12,7 +12,17 @@
     map = new L.map('map', {
 		crs: crs
 	}).setView([65, 27], 3);
-                
+
+	lc = L.control.locate({
+		strings: {
+			title: "Oma sijainti"
+		},
+		flyTo:true,
+		showPopup:false
+	}).addTo(map);
+	map.zoomControl.setPosition('bottomleft');
+	
+
 	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
 	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
@@ -92,14 +102,25 @@
 		baseUrls, 
 		overlays,
 		{
-		collapsed: true,
-		autoZIndex: false
+			collapsed: true,
+			autoZIndex: false,
+			position: 'topright'
 		}
 	).addTo(map);
 	
 	var miniMap = new L.Control.MiniMap(taustakarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
 
-
+	L.control.rainviewer({ 
+		position: 'bottomleft',
+		nextButtonText: '>',
+		playStopButtonText: 'Päälle/Pois',
+		prevButtonText: '<',
+		positionSliderLabelText: "Tunti:",
+		opacitySliderLabelText: "Läpinäkyvyys:",
+		animationInterval: 300,
+		opacity: 0.5
+	}).addTo(map);
+	
 	// disturbances.on('click', function (e) {
 	// document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
 	// });
