@@ -8,94 +8,83 @@
 
 	var map;
 	var crs = L.TileLayer.MML.get3067Proj();
-	var standUrl = 'https://rajapinnat.metsaan.fi/geoserver/Avoinmetsatieto/stand/wms';
-	var habitatUrl = 'https://rajapinnat.metsaan.fi/geoserver/Avoinmetsatieto/habitat/wms';
 
     map = new L.map('map', {
 		crs: crs
 	}).setView([65, 27], 3);
                 
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta" }).addTo(map);
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
 	maastokarttaMini= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
-	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" });
-	kiinteistojaotus = new L.tileLayer.mml_wmts({ layer: "kiinteistojaotus" });
+	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
-	ortokuva = new L.tileLayer.mml_wmts({ layer: "ortokuva" });
-	
-	var stand = new L.tileLayer.betterWms(
-	standUrl, 
-	{
-		layers: 'stand',
-		transparent: true,
-		format: 'image/png',
-		info_format: 'text/plain',
+
+	 roadCover = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
+    	layers: 'TL137',
+        format: 'image/png',
+        transparent: true,
+        attribution: "Väylävirasto",
 		minZoom: 8
+    });
+
+	speedLimit = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/digiroad/ows?", {
+    	layers: 'DR_NOPEUSRAJOITUS',
+        format: 'image/png',
+        transparent: true,
+        attribution: "Väylävirasto",
+		minZoom: 8
+    });
+
+	var icon = L.icon({
+		iconUrl: 'https://img.icons8.com/color/96/000000/under-construction.png',
+		iconSize: [27, 31],
+		iconAnchor: [13.5, 17.5],
+		popupAnchor: [0, -11]
+	  });
+	  
+	workingSitesPoints = L.esri.featureLayer({
+		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/3',
+		isModern:true,
+		pointToLayer: function (geojson, latlng) {
+			return L.marker(latlng, {
+			  icon: icon
+			});
+		  }
 	});
 
-	var habitats = new L.tileLayer.wms(
-	habitatUrl, 
-	{
-		layers: 'habitat',
-		transparent: true,
-		format: 'image/png',
-		info_format: 'text/plain',
-		minZoom: 8,
-		styles:'Avoinmetsatieto:Habitat feature class'
+	workingSitesLines = L.esri.featureLayer({
+		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/4',
+		isModern:true,
+		style: function(feature) {
+			return {
+			  color: '#FF7F00',
+			  weight: 7
+			};
+		}
 	});
-	
-	var habitatLegend = L.control({position: 'bottomleft', minZoom: 10});
-		habitatLegend.onAdd = function (map) {
-		var div = L.DomUtil.create('div', 'info legend');
 
-			div.innerHTML +=
-			'<img src="https://rajapinnat.metsaan.fi/geoserver/Avoinmetsatieto/habitat/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=habitat&style=Habitat%20feature%20class">';
+	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
 
-		return div;
-	};
-
-	var chm = new L.tileLayer.wms(
-		'https://rajapinnat.metsaan.fi/geoserver/Avoinmetsatieto/CHM_newest/wms', 
-		{
-		layers: 'CHM_newest',
-		transparent: true,
-		format: 'image/png',
-		info_format: 'text/plain',
-		minZoom: 8,
-		styles:'Avoinmetsatieto:CHM classification style'
-	 });
-	 
-	var chmLegend = L.control({position: 'bottomleft', minZoom: 10});
-		chmLegend.onAdd = function (map) {
-		var div = L.DomUtil.create('div', 'info legend');
-
-			div.innerHTML +=
-			'<img src="https://rajapinnat.metsaan.fi/geoserver/Avoinmetsatieto/CHM_newest/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=CHM_newest&style=CHM%20classification%20style">';
-
-		return div;
-	};
-	
-	var kiinteistotunnukset = new L.tileLayer.wms(
-		'https://inspire-wms.maanmittauslaitos.fi/inspire-wms/CP/wms', 
-		{
-			layers: 'CP.CadastralParcel',
-			transparent: true,
-			format: 'image/png',
-			minZoom: 8,
-			styles:'CP.CadastralParcel.LabelOnReferencePoint'
-	 });
+	disturbances = L.esri.featureLayer({
+		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/1',
+		isModern:true,
+		style: function(feature) {
+			return {
+			  color: '#E41A1C',
+			  weight: 7
+			};
+		}
+	});
 
 	var overlays = {
-		'Avoin metsätieto': stand,
-		'Erityisen tärkeät elinympäristöt': habitats,
-		'Kiinteistorajat': kiinteistojaotus,
-		'Kiinteistotunnukset': kiinteistotunnukset,
-		'Ilmakuva': ortokuva,
-		'Puuston korkeus (m)': chm
+		'Tien päällyste': roadCover,
+		'Nopeusrajoitukset' : speedLimit,
+		'Tietyöt': workingSitesGroup,
+		'Liikennehäirilöt': disturbances
 	};
 	
 	var baseUrls = {
-	  'Peruskartta': maastokartta,
 	  'Taustakartta': taustakartta,
+	  'Peruskartta': maastokartta,
 	  'Selkokartta': selkokartta
 	};
 		
@@ -108,87 +97,23 @@
 		}
 	).addTo(map);
 	
-		var miniMap = new L.Control.MiniMap(maastokarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
+	var miniMap = new L.Control.MiniMap(maastokarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
 
-		L.Routing.control({
-			waypoints: [
-				L.latLng(57.74, 11.94),
-				L.latLng(57.6792, 11.949)
-			],
-			routeWhileDragging: true,
-			geocoder: L.Control.Geocoder.nominatim()
-		}).addTo(map);
+
+	// disturbances.on('click', function (e) {
+	// document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
+	// });
+
+	// disturbances.on('click', function (e) {
+	// document.getElementById('info-pane').innerHTML = e.layer.feature.properties.title;
+	// });
 	
-	//Specify the layer for which you want to modify the opacity. Note that the setOpacityLayer() method applies to all the controls.
-	//You only need to call it once. 
-	//var opacitySlider = new L.Control.opacitySlider();
-    //map.addControl(opacitySlider);
-    //opacitySlider.setOpacityLayer(stand);
+	workingSitesGroup.bindPopup(function (layer) {
+		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}.', layer.feature.properties);
+	  });
 
 
 
-	// L.control.locate().addTo(map);
-	// 	var position= L.Control.geocoder({
-	// 	position: 'bottomleft',
-	// 	attribution:'Powered by',
-	// 	collapsed: true,
-	// 	placeholder: 'Hae...',
-	// 	defaultMarkGeocode: true,
-	// 	showResultIcons: true,
-	// 	showUniqueResult: true,
-	// 	minZoom: 16,
-	// 	autocomplete:false,
-	// 	geocoder: L.Control.Geocoder.pelias({
-	// 	  serviceUrl: 'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v1/pelias/search?',
-	// 	  geocodingQueryParams: {
-	// 		'api-key':'a8a60737-7849-4969-a55e-7b83db77e13a',
-	// 		'sources': 'geographic-names'
-	// 	  }
-	// 	})
-	// }).addTo(map);  
-	
-	map.on('overlayadd', function (eventLayer) {
-		if (eventLayer.name === 'Erityisen tärkeät elinympäristöt') {
-			habitatLegend.addTo(map);
-		}
-	  })
-	  
-	map.on('overlayadd', function (eventLayer) {
-		if (eventLayer.name === 'Puuston korkeus (m)') {
-			chmLegend.addTo(map);
-		}
-	  })
-	 
-	 map.on('overlayremove', function(eventLayer){
-		if (eventLayer.name === 'Erityisen tärkeät elinympäristöt'){
-			 map.removeControl(habitatLegend);
-		} 
-	})
-	
-	map.on('overlayremove', function(eventLayer){
-		if (eventLayer.name === 'Puuston korkeus (m)'){
-			 map.removeControl(chmLegend);
-		} 
-	});
-
-	L.Routing.control({
-		waypoints: [],
-		language: 'fi',
-		collapsible: undefined,
-		routeWhileDragging: true,
-		reverseWaypoints: true,
-		geocoder: L.Control.Geocoder.nominatim(),
-		router: new L.Routing.Here('eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8',{
-		urlParameters: {
-			mode: 'shortest;car',
-			avoid: 'dirtRoad'
-		}})
-		//router: L.Routing.mapbox('pk.eyJ1IjoidmVzcSIsImEiOiJjazdycjhwNnEwNmhzM3BwY3dzb2VocjB3In0.5v1gD0iaeanchGkPLGt6Rg', {
-		//urlParameters: {
-		//    vehicle: 'car'
-		//}})
-		//router: L.Routing.graphHopper('8e839e40-7f9d-4487-8ebd-5eb3185339b3', {
-		// urlParameters: {
-		//    vehicle: 'car'
-		//}})
-		}).addTo(map);
+	//   disturbances.bindPopup(function (layer) {
+	// 	return L.Util.template('<p>Earthquake <strong>{name}</strong> occured on {mo}/{dy}/{year_}.  It had a magnitude of {magnitude}.</p>', layer.feature.properties);
+	//   });
