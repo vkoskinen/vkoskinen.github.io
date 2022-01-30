@@ -14,7 +14,7 @@
 	}).setView([65, 27], 3);
                 
 	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
-	maastokarttaMini= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
+	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
 
@@ -97,7 +97,7 @@
 		}
 	).addTo(map);
 	
-	var miniMap = new L.Control.MiniMap(maastokarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
+	var miniMap = new L.Control.MiniMap(taustakarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
 
 
 	// disturbances.on('click', function (e) {
