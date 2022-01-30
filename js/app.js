@@ -6,7 +6,6 @@
 	})
 	}
 
-	var map;
 	var crs = L.TileLayer.MML.get3067Proj();
 
     map = new L.map('map', {
@@ -22,6 +21,17 @@
 	}).addTo(map);
 	map.zoomControl.setPosition('bottomleft');
 	
+	var popup = L.popup({
+		closeButton: true,
+		autoClose: true,
+		className: "custom-popup" 
+	  });
+
+	var popupOptions =
+    {
+      'maxWidth': '400',
+      'className' : 'custom-popup'
+    };
 
 	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
 	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
@@ -130,9 +140,9 @@
 	// });
 	
 	workingSitesGroup.bindPopup(function (layer) {
-		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}.', layer.feature.properties);
-	  });
+		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
+	  },popupOptions);
 
 	disturbances.bindPopup(function (layer) {
-		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}.', layer.feature.properties);
-	});
+		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
+	},popupOptions);
