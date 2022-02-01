@@ -33,7 +33,7 @@
       'className' : 'custom-popup'
     };
 
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta" });
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
 	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
@@ -42,15 +42,15 @@
     	layers: 'TL137',
         format: 'image/png',
         transparent: true,
-        attribution: "Väylävirasto",
+        attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a> lisenssi CC 4.0 BY</a>',
 		minZoom: 8
     });
-
+	
 	speedLimit = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/digiroad/ows?", {
     	layers: 'DR_NOPEUSRAJOITUS',
         format: 'image/png',
         transparent: true,
-        attribution: "Väylävirasto",
+        attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a> lisenssi CC 4.0 BY</a>',
 		minZoom: 8
     });
 
@@ -138,7 +138,7 @@
 	// disturbances.on('click', function (e) {
 	// document.getElementById('info-pane').innerHTML = e.layer.feature.properties.title;
 	// });
-	
+
 	workingSitesGroup.bindPopup(function (layer) {
 		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
 	  },popupOptions);
@@ -146,3 +146,50 @@
 	disturbances.bindPopup(function (layer) {
 		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
 	},popupOptions);
+
+	var speedLimitLegend = L.control({position: 'bottomleft', minZoom: 10});
+		speedLimitLegend.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'info legend');
+
+			div.innerHTML +=
+			'<img src="https://julkinen.vayla.fi/oskari/action?action_route=GetLayerTile&legend=true&style=digiroad%3ADR_Nopeusrajoitus&id=319">';
+
+		return div;
+	};
+
+	var roadCoverLegend = L.control({position: 'bottomleft', minZoom: 10});
+	roadCoverLegend.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'info legend');
+
+			div.innerHTML +=
+			'<img src="https://julkinen.vayla.fi/oskari/action?action_route=GetLayerTile&legend=true&style=digiroad%3ADR_Paallystetty_tie_LUOKAT&id=322">';
+
+		return div;
+	};
+
+	map.on('overlayadd', function (eventLayer) {
+		if (eventLayer.name === 'Nopeusrajoitukset') {
+			speedLimitLegend.addTo(map);
+		}
+	  })
+	  
+	map.on('overlayadd', function (eventLayer) {
+		if (eventLayer.name === 'Tien päällyste') {
+			roadCoverLegend.addTo(map);
+		}
+	  })
+	 
+	 map.on('overlayremove', function(eventLayer){
+		if (eventLayer.name === 'Nopeusrajoitukset'){
+			 map.removeControl(speedLimitLegend);
+		} 
+	})
+	
+	map.on('overlayremove', function(eventLayer){
+		if (eventLayer.name === 'Tien päällyste'){
+			 map.removeControl(roadCoverLegend);
+		} 
+	});
+
+	map.attributionControl.addAttribution('Icons by <a target="_blank" href="https://icons8.com">Icons8</a>, MIT License');
+

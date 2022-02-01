@@ -25,8 +25,8 @@
 }(function (L) {
     L.TileLayer.MML = L.TileLayer.extend({
         options: {
-            attribution : '&copy; <a href="http://www.maanmittauslaitos.fi/avoindata_lisenssi_versio1_20120501"' +
-                          'target=new>Maanmittauslaitos</a>'
+            attribution : '&copy; <a href="https://www.maanmittauslaitos.fi/avoindata-lisenssi-cc40"' +
+                          'target=new>Maanmittauslaitos CC 4.0</a>'
         },
 
         statics: {
@@ -87,8 +87,8 @@
             style: "default",
             maxZoom: 15,
             minZoom: 0,
-            attribution : '&copy; <a href="http://www.maanmittauslaitos.fi/avoindata_lisenssi_versio1_20120501"' +
-                          'target=new>Maanmittauslaitos</a>'
+            attribution : '&copy; <a href="https://www.maanmittauslaitos.fi/avoindata-lisenssi-cc40"' +
+                          'target=new>Maanmittauslaitos CC 4.0</a>'
         }
     });
 
