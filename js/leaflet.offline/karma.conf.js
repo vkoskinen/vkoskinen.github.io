@@ -1,7 +1,10 @@
-const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const { babel } = require('@rollup/plugin-babel');
+/* eslint-disable*/
+// Karma configuration
+// Generated on Wed Dec 28 2016 13:40:25 GMT+0100 (CET)
+var resolve = require('rollup-plugin-node-resolve');
+var commonjs = require('rollup-plugin-commonjs');
 
-module.exports = (config) => {
+module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -10,15 +13,15 @@ module.exports = (config) => {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha','chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
       'node_modules/leaflet/dist/leaflet.js',
+      'node_modules/localforage/dist/localforage.js',
       'node_modules/sinon/pkg/sinon.js',
-      'node_modules/idb/build/iife/index-min.js',
-      'test/*.js',
+      'test/*.js'
     ],
 
 
@@ -38,22 +41,27 @@ module.exports = (config) => {
         name: 'LeafletOffline',
         sourcemap: 'inline',
         globals: {
+          localforage: 'localforage',
           leaflet: 'L',
-          sinon: 'sinon',
+          sinon: 'sinon'
         },
       },
-      external: [
-        'leaflet',
-        'sinon',
-      ],
-      plugins: [nodeResolve(), babel({ babelHelpers: 'bundled' })],
+     external: [
+       'leaflet',
+       'localforage',
+       'sinon'
+     ],
+     plugins: [
+       resolve(),
+       commonjs()
+   ]
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha', 'progress'],
+    reporters: ['mocha','progress'],
 
 
     // web server port
@@ -84,6 +92,6 @@ module.exports = (config) => {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity,
-  });
-};
+    concurrency: Infinity
+  })
+}

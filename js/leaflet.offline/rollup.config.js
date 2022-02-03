@@ -1,4 +1,4 @@
-import { babel } from '@rollup/plugin-babel';
+import buble from 'rollup-plugin-buble';
 
 export default {
   input: 'src/index.js',
@@ -6,11 +6,14 @@ export default {
     file: 'dist/bundle.js',
     format: 'umd',
     name: 'LeafletOffline',
-    globals: {
-      leaflet: 'L',
-      idb: 'idb',
-    },
   },
-  plugins: [babel({ babelHelpers: 'bundled' })],
-  external: ['leaflet', 'idb'],
+  plugins: [buble()],
+  external: [
+    'leaflet',
+    'localforage',
+  ],
+  globals: {
+    localforage: 'localforage',
+    leaflet: 'L',
+  },
 };

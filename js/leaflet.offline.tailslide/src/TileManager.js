@@ -28,6 +28,12 @@ const dbPromise = openDB('leaflet.offline', 2, {
 });
 
 /**
+ *
+ * @example
+ * ```js
+ * import { getStorageLength } from 'leaflet.offline'
+ * getStorageLength().then(i => console.log(i + 'tiles in storage'))
+ * ```
  * @typedef {Object} tileInfo
  * @property {string} key storage key
  * @property {string} url resolved url
@@ -35,15 +41,6 @@ const dbPromise = openDB('leaflet.offline', 2, {
  * @property {string} x left point of tile
  * @property {string} y top point coord of tile
  * @property {string} z tile zoomlevel
- * @property {Number} createdAt
- */
-
-/**
- * @example
- * ```js
- * import { getStorageLength } from 'leaflet.offline'
- * getStorageLength().then(i => console.log(i + 'tiles in storage'))
- * ```
  * @return {Promise<Number>} get number of store tiles
  */
 export async function getStorageLength() {
@@ -65,7 +62,7 @@ export async function getStorageInfo(urlTemplate) {
   return (await dbPromise).getAllFromIndex(
     tileStoreName,
     urlTemplateIndex,
-    range
+    range,
   );
 }
 
@@ -100,12 +97,8 @@ export async function downloadTile(tileUrl) {
  * @return {Promise}
  */
 export async function saveTile(tileInfo, blob) {
-  ['urlTemplate', 'z', 'x', 'y', 'key', 'url', 'createdAt'].forEach((key) => {
-    if (tileInfo[key] === undefined) {
-      throw Error(`Missing ${key} prop`);
-    }
-  });
-
+  // console.log('Saving Tile'); // eslint-disable-line no-console
+  // console.log(tileInfo); // eslint-disable-line no-console
   return (await dbPromise).put(tileStoreName, {
     blob,
     ...tileInfo,
@@ -142,16 +135,13 @@ export function getTileUrls(layer, bounds, zoom) {
   const tiles = [];
   const tileBounds = L.bounds(
     bounds.min.divideBy(layer.getTileSize().x).floor(),
-    bounds.max.divideBy(layer.getTileSize().x).floor()
+    bounds.max.divideBy(layer.getTileSize().x).floor(),
   );
   for (let j = tileBounds.min.y; j <= tileBounds.max.y; j += 1) {
     for (let i = tileBounds.min.x; i <= tileBounds.max.x; i += 1) {
       const tilePoint = new L.Point(i, j);
       const data = {
-        ...layer.options,
-        x: i,
-        y: j,
-        z: zoom,
+        ...layer.options, x: i, y: j, z: zoom,
       };
       tiles.push({
         key: getTileUrl(layer._url, {
@@ -166,7 +156,6 @@ export function getTileUrls(layer, bounds, zoom) {
         x: i,
         y: j,
         urlTemplate: layer._url,
-        createdAt: Date.now(),
       });
     }
   }
@@ -200,20 +189,20 @@ export function getStoredTilesAsJson(layer, tiles) {
   for (let i = 0; i < tiles.length; i += 1) {
     const topLeftPoint = new L.Point(
       tiles[i].x * layer.getTileSize().x,
-      tiles[i].y * layer.getTileSize().y
+      tiles[i].y * layer.getTileSize().y,
     );
     const bottomRightPoint = new L.Point(
       topLeftPoint.x + layer.getTileSize().x,
-      topLeftPoint.y + layer.getTileSize().y
+      topLeftPoint.y + layer.getTileSize().y,
     );
 
     const topLeftlatlng = L.CRS.EPSG3857.pointToLatLng(
       topLeftPoint,
-      tiles[i].z
+      tiles[i].z,
     );
     const botRightlatlng = L.CRS.EPSG3857.pointToLatLng(
       bottomRightPoint,
-      tiles[i].z
+      tiles[i].z,
     );
     featureCollection.features.push({
       type: 'Feature',
@@ -256,7 +245,7 @@ export async function removeTile(key) {
 export async function getTile(key) {
   return (await dbPromise)
     .get(tileStoreName, key)
-    .then((result) => result && result.blob);
+    .then((result) => (result === undefined ? undefined : result.blob));
 }
 
 /**

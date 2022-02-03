@@ -6,39 +6,66 @@
 	})
 	}
 
-	var crs = L.TileLayer.MML.get3067Proj();
+	//var crs = L.TileLayer.MML.get3067Proj();
 
-    map = new L.map('map', {
-		crs: crs
-	}).setView([65, 27], 3);
+	/* global L,LeafletOffline, $  */
 
-	lc = L.control.locate({
-		strings: {
-			title: "Oma sijainti"
-		},
-		flyTo:true,
-		showPopup:false
-	}).addTo(map);
-	map.zoomControl.setPosition('bottomleft');
+	const here = {
+		apiKey:'eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8'
+	  }
+	  
+	const style = 'normal.day';
 	
-	var popup = L.popup({
-		closeButton: true,
-		autoClose: true,
-		className: "custom-popup" 
-	  });
+	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
 
-	var popupOptions =
-    {
-      'maxWidth': '300',
-      'className' : 'custom-popup'
-    };
+	function showTileList() {
+	LeafletOffline.getStorageInfo(urlTemplate).then((r) => {
+		const list = document.getElementById('tileinforows');
+		list.innerHTML = '';
+		for (let i = 0; i < r.length; i += 1) {
+		const createdAt = new Date(r[i].createdAt);
+		list.insertAdjacentHTML(
+			'beforeend',
+			`<tr><td>${i}</td><td>${r[i].url}</td><td>${
+			r[i].key
+			}</td><td>${createdAt.toDateString()}</td></tr>`,
+		);
+		}
+	});
+	}
 
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
-	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
-	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
-	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
+	$('#storageModal').on('show.bs.modal', () => {
+	showTileList();
+	});
 
-	 roadCover = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
+	var map = L.map('map', {
+		center: [65.425,27.510],
+		zoom: 5,
+		 minZoom: 5,
+		 maxZoom: 16,
+	 });
+
+	// offline baselayer, will use offline source if available
+	const baseLayer = L.tileLayer
+	.offline(urlTemplate, {
+		attribution: 'Map data {attribution.OpenStreetMap}',
+		subdomains: 'abc',
+		minZoom: 12,
+		//maxZoom: 7,
+		saveOnLoad: true,
+		downsample: true
+	});
+
+	//maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
+	//taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
+	//taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
+	//selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
+
+	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', {attribution: '&copy HERE'})
+	.addTo(map);
+
+	roadCover = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
     	layers: 'TL137',
         format: 'image/png',
         transparent: true,
@@ -103,22 +130,100 @@
 	};
 	
 	var baseUrls = {
-	  'Taustakartta': taustakartta,
-	  'Peruskartta': maastokartta,
-	  'Selkokartta': selkokartta
+	  //'Taustakartta': taustakartta,
+	  //'Peruskartta': maastokartta,
+	  //'Selkokartta': selkokartta
+	  'HERE': hereMap	  
 	};
-		
-	L.control.layers(
-		baseUrls, 
-		overlays,
-		{
-			collapsed: true,
-			autoZIndex: false,
-			position: 'topright'
-		}
-	).addTo(map);
 	
-	var miniMap = new L.Control.MiniMap(taustakarttaMini, { toggleDisplay: true, minimize: true}).addTo(map);
+	// add buttons to save tiles in area viewed
+	const control = L.control.savetiles(baseLayer, {
+	zoomlevels: [13, 16], // optional zoomlevels to save, default current zoomlevel,
+	confirm(layer, successCallback) {
+		// eslint-disable-next-line no-alert
+		if (window.confirm(`Save ${layer._tilesforSave.length}`)) {
+		successCallback();
+		}
+	},
+	confirmRemoval(layer, successCallback) {
+		// eslint-disable-next-line no-alert
+		if (window.confirm('Remove all the tiles?')) {
+		successCallback();
+		}
+	},
+	saveText:
+		'<i class="fa fa-download" aria-hidden="true" title="Save tiles"></i>',
+	rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
+	});
+	//control.addTo(map);
+
+	// layer switcher control
+	const layerswitcher = L.control
+	.layers(baseUrls, overlays
+	, { collapsed: true })
+	.addTo(map);
+
+	let storageLayer;
+
+	const getGeoJsonData = () => LeafletOffline.getStorageInfo(urlTemplate)
+	.then((data) => LeafletOffline.getStoredTilesAsJson(baseLayer, data));
+
+	const addStorageLayer = () => {
+	getGeoJsonData().then((geojson) => {
+		storageLayer = L.geoJSON(geojson).bindPopup(
+		(clickedLayer) => clickedLayer.feature.properties.key,
+		);
+		layerswitcher.addOverlay(storageLayer, 'Offline tiilet');
+	});
+	};
+
+	addStorageLayer();
+
+
+	baseLayer.on('storagesize', (e) => {
+	if (storageLayer) {
+		storageLayer.clearLayers();
+		getGeoJsonData().then((data) => {
+		storageLayer.addData(data);
+		});
+	}
+	});
+
+	// events while saving a tile layer
+	let progress;
+	baseLayer.on('savestart', (e) => {
+	progress = 0;
+	});
+	baseLayer.on('savetileend', () => {
+	progress += 1;
+	});
+
+	lc = L.control.locate({
+		strings: {
+			title: "Oma sijainti"
+		},
+		flyTo:true,
+		showPopup:false
+	}).addTo(map);
+	map.zoomControl.setPosition('bottomleft');
+	
+	
+	var popup = L.popup({
+		closeButton: true,
+		autoClose: true,
+		className: "custom-popup" 
+	  });
+
+	var popupOptions =
+    {
+      'maxWidth': '300',
+      'className' : 'custom-popup'
+    };
+	
+
+	//var miniMap = new L.Control.MiniMap(osmMiniMap).addTo(map);
+
+
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
 		title: '<h2>Motokartat</h2>',
@@ -144,7 +249,7 @@
 		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
 	},popupOptions);
 
-	var speedLimitLegend = L.control({position: 'bottomleft', minZoom: 10});
+	var speedLimitLegend = L.control({position: 'bottomright', minZoom: 10});
 		speedLimitLegend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'info legend');
 
@@ -154,7 +259,7 @@
 		return div;
 	};
 
-	var roadCoverLegend = L.control({position: 'bottomleft', minZoom: 10});
+	var roadCoverLegend = L.control({position: 'bottomright', minZoom: 10});
 	roadCoverLegend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'info legend');
 
@@ -190,3 +295,30 @@
 
 	map.attributionControl.addAttribution('Icons by <a target="_blank" href="https://icons8.com">Icons8</a>, MIT License');
 
+	//  if(map.getZoom() > 7)
+	// map.addControl(control);
+	// else
+	// map.removeControl(control);
+
+	map.on('zoomend',
+		function () {
+			if (map.getZoom() >= 12 && !map.hasLayer(baseLayer)) {
+				map.addControl(control);
+			}
+			if (map.getZoom() < 12 && map.hasLayer(baseLayer)) {
+				map.removeControl(control);
+			}
+		}
+	);
+
+	map.on('overlayadd', function (eventLayer) {
+		if (eventLayer.name === 'OSM') {
+			map.addControl(control);
+		}
+	  })
+	  
+	map.on('overlayremove', function(eventLayer){
+		if (eventLayer.name === 'OSM'){
+			 map.removeControl(control);
+		} 
+	});

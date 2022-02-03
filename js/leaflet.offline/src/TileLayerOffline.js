@@ -1,104 +1,108 @@
 import L from 'leaflet';
-import { getTileUrls, getTileUrl, getTile } from './TileManager';
+import localforage from './localforage';
+
 
 /**
- * A layer that uses stored tiles when available. Falls back to online.
- *
+ * A layer that uses store tiles when available. Falls back to online.
+ * Use this layer directly or extend it
  * @class TileLayerOffline
- * @hideconstructor
- * @example
- * const tileLayerOffline = L.tileLayer
- * .offline('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
- *   attribution: 'Map data {attribution.OpenStreetMap}',
- *   subdomains: 'abc',
- *   minZoom: 13,
- * })
- * .addTo(map);
  */
-const TileLayerOffline = L.TileLayer.extend(
-  /** @lends  TileLayerOffline */ {
-    /**
-     * Create tile HTMLElement
-     * @private
-     * @param  {object}   coords x,y,z
-     * @param  {Function} done
-     * @return {HTMLElement}  img
-     */
-    createTile(coords, done) {
-      let error;
-      const tile = L.TileLayer.prototype.createTile.call(
-        this,
-        coords,
-        () => {}
-      );
-      const url = tile.src;
-      tile.src = '';
-      this.setDataUrl(coords)
-        .then((dataurl) => {
-          tile.src = dataurl;
-          done(error, tile);
-        })
-        .catch(() => {
-          tile.src = url;
-          L.DomEvent.on(
-            tile,
-            'load',
-            L.Util.bind(this._tileOnLoad, this, done, tile)
-          );
-          L.DomEvent.on(
-            tile,
-            'error',
-            L.Util.bind(this._tileOnError, this, done, tile)
-          );
-        });
-      return tile;
-    },
-    /**
-     * dataurl from localstorage
-     * @private
-     * @param {object} coords x,y,z
-     * @return {Promise<string>} objecturl
-     */
-    setDataUrl(coords) {
-      return getTile(this._getStorageKey(coords)).then((data) => {
+const TileLayerOffline = L.TileLayer.extend(/** @lends  TileLayerOffline */ {
+  /**
+  * Create tile HTMLElement
+  * @private
+  * @param  {array}   coords [description]
+  * @param  {Function} done   [description]
+  * @return {HTMLElement}          [description]
+  */
+  createTile(coords, done) {
+    const tile = L.TileLayer.prototype.createTile.call(this, coords, done);
+    const url = tile.src;
+    tile.src = '';
+    this.setDataUrl(tile, url).then((dataurl) => {
+      tile.src = dataurl;
+    }).catch(() => {
+      tile.src = url;
+    });
+    return tile;
+  },
+  /**
+   * dataurl from localstorage
+   * @param {DomElement} tile [description]
+   * @param {string} url  [description]
+   * @return {Promise} resolves to base64 url
+   */
+  setDataUrl(tile, url) {
+    return new Promise((resolve, reject) => {
+      localforage.getItem(this._getStorageKey(url)).then((data) => {
         if (data && typeof data === 'object') {
-          return URL.createObjectURL(data);
+          resolve(URL.createObjectURL(data));
+        } else {
+          reject();
         }
-        throw new Error('tile not found in storage');
-      });
-    },
-    /**
-     * get key to use for storage
-     * @private
-     * @param  {string} url url used to load tile
-     * @return {string} unique identifier.
-     */
-    _getStorageKey(coords) {
-      return getTileUrl(this._url, {
-        ...coords,
-        ...this.options,
-        s: this.options.subdomains['0'],
-      });
-    },
-    /**
-     * getTileUrls for single zoomlevel
-     * @private
-     * @param  {object} L.latLngBounds
-     * @param  {number} zoom
-     * @return {object[]} the tile urls, key, url, x, y, z
-     */
-    getTileUrls(bounds, zoom) {
-      return getTileUrls(this, bounds, zoom);
-    },
-  }
-);
+      }).catch((e) => { reject(e); });
+    });
+  },
+  /**
+   * get key to use for storage
+   * @private
+   * @param  {string} url url used to load tile
+   * @return {string} unique identifier.
+   */
+  _getStorageKey(url) {
+    let key;
+    const subdomainpos = this._url.indexOf('{s}');
+    if (subdomainpos > 0) {
+      key = url.substring(0, subdomainpos) +
+        this.options.subdomains['0'] +
+        url.substring(subdomainpos + 1, url.length);
+    }
+    return key || url;
+  },
+  /**
+   * @return {number} Number of simultanous downloads from tile server
+   */
+  getSimultaneous() {
+    return this.options.subdomains.length;
+  },
+  /**
+   * getTileUrls for single zoomlevel
+   * @param  {object} L.latLngBounds
+   * @param  {number} zoom
+   * @return {object[]} the tile urls, key, url
+   */
+  getTileUrls(bounds, zoom) {
+    const tiles = [];
+    const origurl = this._url;
+    // getTileUrl uses current zoomlevel, we want to overwrite it
+    this.setUrl(this._url.replace('{z}', zoom), true);
+    const tileBounds = L.bounds(
+      bounds.min.divideBy(this.getTileSize().x).floor(),
+      bounds.max.divideBy(this.getTileSize().x).floor(),
+    );
+    let url;
+    for (let j = tileBounds.min.y; j <= tileBounds.max.y; j += 1) {
+      for (let i = tileBounds.min.x; i <= tileBounds.max.x; i += 1) {
+        const tilePoint = new L.Point(i, j);
+        url = L.TileLayer.prototype.getTileUrl.call(this, tilePoint);
+        tiles.push({
+          key: this._getStorageKey(url),
+          url,
+        });
+      }
+    }
+    // restore url
+    this.setUrl(origurl, true);
+    return tiles;
+  },
+});
 
 /**
- * Control finished calculating storage size
- * @event storagesize
- * @memberof TileLayerOffline
- * @type {ControlStatus}
- */
+* Tiles removed event
+* @event storagesize
+* @memberof TileLayerOffline
+* @type {object}
+*/
 
 /**
  * Start saving tiles
@@ -142,14 +146,9 @@ const TileLayerOffline = L.TileLayer.extend(
  * @type {object}
  */
 
-/**
- * Leaflet tilelayer
- * @external "L.tileLayer"
- * @see {@link https://leafletjs.com/reference-1.6.0.html#tilelayer|TileLayer}
- */
 
 /**
- * @function external:"L.tileLayer".offline
+ * @function L.tileLayer.offline
  * @param  {string} url     [description]
  * @param  {object} options {@link http://leafletjs.com/reference-1.2.0.html#tilelayer}
  * @return {TileLayerOffline}      an instance of TileLayerOffline
