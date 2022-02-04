@@ -1,0 +1,70 @@
+{
+  "_from": "leaflet-routing-machine-here",
+  "_id": "leaflet-routing-machine-here@1.4.0",
+  "_inBundle": false,
+  "_integrity": "sha512-Vf52I/qF22MmKi5FjB8r5XH/doDRlRJLExHyWG7NK1I9yZtckyUPPBq80W1S0NURZ3oTmXl/Xuv4Y5KCur0wNg==",
+  "_location": "/leaflet-routing-machine-here",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "leaflet-routing-machine-here",
+    "name": "leaflet-routing-machine-here",
+    "escapedName": "leaflet-routing-machine-here",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/leaflet-routing-machine-here/-/leaflet-routing-machine-here-1.4.0.tgz",
+  "_shasum": "f04530ee400079c34866d09a4a023960a26a82a6",
+  "_spec": "leaflet-routing-machine-here",
+  "_where": "C:\\motoapp",
+  "author": {
+    "name": "Jesse Crocker",
+    "email": "jesse@gaiagps.com"
+  },
+  "browserify-shim": {
+    "leaflet": "global:L"
+  },
+  "bugs": {
+    "url": "https://github.com/Daredzik/lrm-here/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "corslite": "0.0.6",
+    "haversine": "^1.0.0",
+    "leaflet": "^0.7.3"
+  },
+  "deprecated": false,
+  "description": "Support for here in Leaflet Routing Machine, including route restrictions",
+  "devDependencies": {
+    "browserify": "^8.1.3",
+    "browserify-shim": "^3.8.2",
+    "uglify-js": "^2.4.16"
+  },
+  "homepage": "https://github.com/Daredzik/lrm-here",
+  "keywords": [
+    "leaflet",
+    "routing",
+    "route attributes",
+    "truck attributes",
+    "route restrictions",
+    "truck restrictions"
+  ],
+  "license": "ISC",
+  "main": "dist/lrm-here.js",
+  "name": "leaflet-routing-machine-here",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daredzik/lrm-here.git"
+  },
+  "scripts": {
+    "dist": "./scripts/dist.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.4.0"
+}

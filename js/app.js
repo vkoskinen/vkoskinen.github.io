@@ -254,6 +254,155 @@
 		return div;
 	};
 
+		// Reserve
+		function createReverseButton(label, container) {
+			var btn = L.DomUtil.create('button', '', container);
+			btn.setAttribute('type', 'button');
+			btn.innerHTML = label;
+			btn.title = "Reverse waypoints";
+			return btn;
+		}
+		
+		// avoid highways and unpaved roads
+		function createAvoidAll(label, container) {
+			var btn = L.DomUtil.create('button', '', container);
+			btn.setAttribute('type', 'button');
+			btn.innerHTML = label;
+			btn.title = "Vältä valtateitä ja päällystämättömiä teitä";
+			return btn;
+		}
+		
+		// avoid highways
+		function createAvoidHighWayButton(label, container) {
+			var btn = L.DomUtil.create('button', '', container);
+			btn.setAttribute('type', 'button');
+			btn.innerHTML = label;
+			btn.title = "Vältä valtateitä";
+			return btn;
+		}
+		
+		// avoid unpaved roads
+		function createUnpavedRoadsButton(label, container) {
+			var btn = L.DomUtil.create('button', '', container);
+			btn.setAttribute('type', 'button');
+			btn.innerHTML = label;
+			btn.title = "Vältä päällystättömiä teitä";
+			return btn;
+		}
+		
+		// fastest
+		function createFastestButton(label, container) {
+			var btn = L.DomUtil.create('button', '', container);
+			btn.setAttribute('type', 'button');
+			btn.innerHTML = label;
+			btn.title = "Nopein";
+			return btn;
+		}
+	
+
+	var geoPlan = L.Routing.Plan.extend({
+
+		createGeocoders: function() {
+	
+			var container = L.Routing.Plan.prototype.createGeocoders.call(this),
+				
+				// Create a reverse waypoints button
+				reverseButton = createReverseButton('<i class="fa fa-arrows-alt-v" aria-hidden="true"></i>', container);
+	
+				// Avoid highways and unpaved roads
+				//avoidAllButton = createAvoidAll('<i class="fa fa-globe" aria-hidden="true"></i>', container);
+	
+				// Avoid highways
+				avoidHighWayButton = createAvoidHighWayButton('<i class="fa fa-road" aria-hidden="true"></i>', container);
+	
+				// Suitable for motorcycles
+				unpavedRoadsButton = createUnpavedRoadsButton('<i class="fa fa-motorcycle" aria-hidden="true"></i>', container);
+	
+				// Fastest
+				fastestButton = createFastestButton('<i class="fa fa-fast-forward" aria-hidden="true"></i>', container);
+				
+				L.DomEvent.on(reverseButton, 'click', function() {
+					var waypoints = this.getWaypoints();
+					this.setWaypoints(waypoints.reverse());
+					console.log("Waypoints reversed");
+				}, this);
+				
+				// Event to generate route which avoids unpaved roads
+				L.DomEvent.on(unpavedRoadsButton, 'click', function() {
+					routing.getRouter().options.urlParameters.mode = 'shortest;car;dirtRoad:-1';
+					routing.route();
+					routing.setWaypoints(routing.getWaypoints());
+					console.log("Avoid unpaved route");	
+				}, this);
+	
+				// Event to generate route which avoids motorways
+				L.DomEvent.on(avoidHighWayButton, 'click', function() {
+					routing.getRouter().options.urlParameters.mode = 'shortest;car;motorway:-1';
+					routing.route();
+					routing.setWaypoints(routing.getWaypoints());
+					console.log("Avoid motorways route");	
+				}, this);
+				
+				// Event to generate fastest routes
+				L.DomEvent.on(fastestButton, 'click', function() {
+					routing.getRouter().options.urlParameters.mode = 'fastest;car';
+					routing.route();
+					routing.setWaypoints(routing.getWaypoints());
+					console.log("Fastest");	
+				}, this);
+				
+				return container;
+			}
+	});
+			
+	// Create a plan for the routing
+	var plan = new geoPlan(
+		[],
+		{
+			geocoder: new L.Control.Geocoder.Nominatim(),
+			//addWaypoints: false,
+			routeWhileDragging: false,
+			draggableWaypoints: false,
+		}),
+		// Routing machine HERE
+		routing = L.Routing.control({
+			waypoints: [],
+			position: 'bottomright',
+			router: new L.Routing.Here('eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8',{}),
+			plan: plan,
+			show: false,
+			collapsible: true,
+			collapseBtn: function(itinerary) {
+				var collapseBtn = L.DomUtil.create('span', itinerary.options.collapseBtnClass);
+				L.DomEvent.on(collapseBtn, 'click', itinerary._toggle, itinerary);
+				itinerary._container.insertBefore(collapseBtn, itinerary._container.firstChild);
+			},
+			altLineOptions: {
+			styles: [{
+				color: 'black',
+				opacity: 0.15,
+				weight: 9
+			}, {
+				color: 'white',
+				opacity: 0.8,
+				weight: 6
+			}, {
+				color: 'blue',
+				opacity: 0.5,
+				weight: 2
+			}]
+			}
+	});
+	map.addControl(routing);
+	
+	function createButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Start route location";
+		return btn;
+	}
+	
 	var roadCoverLegend = L.control({position: 'bottomright', minZoom: 10});
 	roadCoverLegend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'info legend');
