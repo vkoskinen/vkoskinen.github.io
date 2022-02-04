@@ -22,6 +22,7 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "jquery-1.10.2": "^1.10.2",
     "leaflet": "^1.7.1",
     "leaflet-html-legend": "^0.3.5",
@@ -31,6 +32,7 @@
     "leaflet.offline": "^2.1.0",
     "leaflet.offline.tailslide": "^2.0.0-beta.5",
     "leaflet.zoomshowhide": "^0.1.0",
+    "mapbox.js": "^3.3.1",
     "proj4": "^2.7.5"
   }
 }

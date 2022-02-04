@@ -206,8 +206,7 @@
 		showPopup:false
 	}).addTo(map);
 	map.zoomControl.setPosition('bottomleft');
-	
-	
+		  	
 	var popup = L.popup({
 		closeButton: true,
 		autoClose: true,
@@ -220,10 +219,6 @@
       'className' : 'custom-popup'
     };
 	
-
-	//var miniMap = new L.Control.MiniMap(osmMiniMap).addTo(map);
-
-
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
 		title: '<h2>Motokartat</h2>',
