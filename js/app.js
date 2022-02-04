@@ -50,11 +50,11 @@
 	const baseLayer = L.tileLayer
 	.offline(urlTemplate, {
 		attribution: 'Map data {attribution.OpenStreetMap}',
-		subdomains: 'abc',
+		//subdomains: 'abc',
 		minZoom: 12,
 		//maxZoom: 7,
-		saveOnLoad: true,
-		downsample: true
+		saveOnLoad: false,
+		downsample: false
 	});
 
 	//maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
