@@ -170,9 +170,9 @@
 
 	const addStorageLayer = () => {
 	getGeoJsonData().then((geojson) => {
-		storageLayer = L.geoJSON(geojson).bindPopup(
-		(clickedLayer) => clickedLayer.feature.properties.key,
-		);
+		storageLayer = L.geoJSON(geojson)//.bindPopup(
+		//(clickedLayer) => clickedLayer.feature.properties.key,
+		//);
 		layerswitcher.addOverlay(storageLayer, 'Offline tiilet');
 	});
 	};
@@ -292,10 +292,10 @@
 
 	map.on('moveend',
 		function () {
-			if (map.getZoom() >= 12) {
+			if (map.getZoom() >= 14) {
 				map.addControl(control);
 			}
-			if (map.getZoom() < 12) {
+			if (map.getZoom() < 14) {
 				map.removeControl(control);
 			}
 		}
