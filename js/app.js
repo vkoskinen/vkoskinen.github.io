@@ -69,7 +69,7 @@
     	layers: 'TL137',
         format: 'image/png',
         transparent: true,
-        attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a> lisenssi CC 4.0 BY</a>',
+        attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a>',
 		minZoom: 8
     });
 	
@@ -77,7 +77,7 @@
     	layers: 'DR_NOPEUSRAJOITUS',
         format: 'image/png',
         transparent: true,
-        attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a> lisenssi CC 4.0 BY</a>',
+        attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a>',
 		minZoom: 8
     });
 
@@ -293,32 +293,15 @@
 		} 
 	});
 
-	map.attributionControl.addAttribution('Icons by <a target="_blank" href="https://icons8.com">Icons8</a>, MIT License');
+	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
 
-	//  if(map.getZoom() > 7)
-	// map.addControl(control);
-	// else
-	// map.removeControl(control);
-
-	map.on('zoomend',
+	map.on('moveend',
 		function () {
-			if (map.getZoom() >= 12 && !map.hasLayer(baseLayer)) {
+			if (map.getZoom() >= 12) {
 				map.addControl(control);
 			}
-			if (map.getZoom() < 12 && map.hasLayer(baseLayer)) {
+			if (map.getZoom() < 12) {
 				map.removeControl(control);
 			}
 		}
 	);
-
-	map.on('overlayadd', function (eventLayer) {
-		if (eventLayer.name === 'OSM') {
-			map.addControl(control);
-		}
-	  })
-	  
-	map.on('overlayremove', function(eventLayer){
-		if (eventLayer.name === 'OSM'){
-			 map.removeControl(control);
-		} 
-	});
