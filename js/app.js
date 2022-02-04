@@ -138,7 +138,7 @@
 	
 	// add buttons to save tiles in area viewed
 	const control = L.control.savetiles(baseLayer, {
-	zoomlevels: [13, 16], // optional zoomlevels to save, default current zoomlevel,
+	//zoomlevels: [13, 16], // optional zoomlevels to save, default current zoomlevel,
 	confirm(layer, successCallback) {
 		// eslint-disable-next-line no-alert
 		if (window.confirm(`Save ${layer._tilesforSave.length}`)) {
