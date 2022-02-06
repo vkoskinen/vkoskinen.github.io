@@ -95,7 +95,7 @@
     L.tileLayer.mml_wmts = function (options) {
         var layer = options.layer || "taustakartta";
         var url = "https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/" + layer + "/default/"
-                + "ETRS-TM35FIN/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
+                + "WGS84_Pseudo-Mercator/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
 
         return new L.TileLayer.MML_WMTS(url, options);
     };

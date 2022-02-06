@@ -1,0 +1,38 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+}
+.leaflet-top.leaflet-right .leaflet-control-layers .leaflet-control-layers-toggle {
+    background-image: url(../images/icons8-finland-map-50.png)
+}
+.leaflet-info-button {
+    font-size:14px;
+    background-image: url(../images/icons8-info-24.png)
+}
+.custom-popup .leaflet-popup-content-wrapper {
+background: #276347;
+color: #fff;
+font-size: 14px;
+line-height: 24px;
+border-radius: 0px;
+}
+.custom-popup .leaflet-popup-content-wrapper a {
+color: rgba(255, 255, 255, 0.822);
+}
+.custom-popup .leaflet-popup-tip-container {
+width: 30px;
+height: 15px;
+}
+.custom-popup .leaflet-popup-tip {
+background: transparent;
+border: none;
+box-shadow: none;
+}
+.map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

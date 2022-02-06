@@ -6,7 +6,6 @@
 	})
 	}
 
-	//var crs = L.TileLayer.MML.get3067Proj();
 
 	/* global L,LeafletOffline, $  */
 
@@ -46,6 +45,18 @@
 		 maxZoom: 16,
 	 });
 
+	 var popup = L.popup({
+		closeButton: true,
+		autoClose: true,
+		className: "custom-popup" 
+	  });
+
+	var popupOptions =
+    {
+      'maxWidth': '300',
+      'className' : 'custom-popup'
+    };
+
 	// offline baselayer, will use offline source if available
 	const baseLayer = L.tileLayer
 	.offline(urlTemplate, {
@@ -57,10 +68,10 @@
 		downsample: false
 	});
 
-	//maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
-	//taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
-	//taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" }).addTo(map);
-	//selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
+	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
+	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" });
+	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
 
 	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', {attribution: '&copy HERE'})
 	.addTo(map);
@@ -122,18 +133,93 @@
 		}
 	});
 
+	function highlight (layer) {
+		layer.setStyle({
+			weight: 5,
+			color: 'red',
+			dashArray: ''
+		});
+		if (!L.Browser.ie && !L.Browser.opera) {
+			layer.bringToFront();
+		}
+	}
+
+	function dehighlight (layer) {
+	  if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
+		  geojson.resetStyle(layer);
+	  }
+	}
+
+	function select (layer) {
+	  if (selected !== null) {
+		var previous = selected;
+	  }
+		map.fitBounds(layer.getBounds());
+		selected = layer;
+		if (previous) {
+		  dehighlight(previous);
+		}
+	}
+
+	var selected = null;
+	  
+	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
+		filter: function(feature, layer) {
+		return (feature.geometry.type)=="LineString";
+		},
+		style: function (feature) {
+		  return {
+			  weight: 2,
+			  opacity: 1,
+			  color: 'blue',
+			  dashArray: 3,
+		  };
+	  },
+		onEachFeature: function (feature, layer) {
+			var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
+			var description = feature.properties.description;
+			if (name == null ){
+				var spopup = "Ei tietoa";
+				}
+			if (description == undefined){
+			var spopup = "Reitin nimi: " + name + ""
+				}
+			else {
+			var spopup = "<dd>Kahvila: " + '<a target="_blank" href='+ description + '>' + name +'</a>' + "</dd>"
+							+ "<dd>Aukiolo: " + description + "</dd>"
+				}
+		layer.bindPopup(spopup,popupOptions);
+		layer.on({
+		  'mouseover': function (e) {
+			highlight(e.target);
+		  },
+		  'mouseout': function (e) {
+			dehighlight(e.target);
+		  },
+			  'click': function (e) {
+				select(e.target);
+			  }
+		  });
+	  }
+	});
+
+	function geomFilter(feature) {
+		if (features.type === "LineString") return true
+	};
+
 	var overlays = {
 		'Tien päällyste': roadCover,
 		'Nopeusrajoitukset' : speedLimit,
 		'Tietyöt': workingSitesGroup,
-		'Liikennehäirilöt': disturbances
+		'Liikennehäiriöt': disturbances,
+		'Mutkareitit': geojson
 	};
 	
 	var baseUrls = {
-	  //'Taustakartta': taustakartta,
-	  //'Peruskartta': maastokartta,
-	  //'Selkokartta': selkokartta
-	  'HERE': hereMap	  
+	  'HERE': hereMap,  
+	  'Taustakartta': taustakartta,
+	  'Peruskartta': maastokartta,
+	  'Selkokartta': selkokartta,
 	};
 	
 	// add buttons to save tiles in area viewed
@@ -207,18 +293,6 @@
 	}).addTo(map);
 	map.zoomControl.setPosition('bottomleft');
 		  	
-	var popup = L.popup({
-		closeButton: true,
-		autoClose: true,
-		className: "custom-popup" 
-	  });
-
-	var popupOptions =
-    {
-      'maxWidth': '300',
-      'className' : 'custom-popup'
-    };
-	
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
 		title: '<h2>Motokartat</h2>',
