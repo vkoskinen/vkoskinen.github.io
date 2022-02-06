@@ -237,31 +237,70 @@
 			var startTime = new Date(feature.properties.startTime);
 			var endTime = new Date(feature.properties.endTime);
 			var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
-						+ "<br><br>Paikka: " + feature.properties.primaryPointMunicipality
 						+ "<br><br>Tarkenne: " + feature.properties.locationDescription
-						+ "<br><br>Alkanut: " +startTime.toLocaleString()
-						+ "<br>Päättynyt: " +endTime.toLocaleString();
-
+						+ "<br><br>Ajankohta: " + startTime.toLocaleString();
 		layer.bindPopup(spopup,popupOptions);
 	  }
 	});
 
 	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
 
-	// workingSitesGroup.bindPopup(function (layer) {
-	// 	return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
-	//   },popupOptions);
+	var stations = new L.GeoJSON.AJAX("data/fuel.geojson", {
+		minZoom: 8,
+		onEachFeature: function(feature, layer) {
+		var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
+		var stationWebsite = feature.properties.website;
+		var stationUrl = feature.properties.url;
+		var stationWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
+		var stationOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
+		var stationOperator = (feature.properties.operator !== undefined) ? feature.properties.operator:"Ei tietoa";
+		if (name == null || name == undefined){
+		var spopup = "Ei tietoa";
+		}
+		if (stationWebsite == undefined && stationUrl == undefined){
+		var spopup = "<dd>Asema: " + name + "</dd>"
+					 + "<dd>Aukiolo: " + stationOpeningHours + "</dd>"
+		  }
+		else {
+		var spopup = "<dd>Asema: " + '<a target="_blank" href='+ stationWeb + '>' + name +'</a>' + "</dd>"
+					 + "<dd>Aukiolo: " + stationOpeningHours + "</dd>"
+					 + "<dd>Operaattori: " + stationOperator + "</dd>"
+		  }
+		layer.bindPopup(spopup).openPopup();
+		}}
+	);
 
-	function geomFilter(feature) {
-		if (features.type === "LineString") return true
-	};
+	var cafes = new L.GeoJSON.AJAX("data/cafe.geojson", {
+		minZoom: 8,
+		onEachFeature: function(feature, layer) {
+		var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
+		var cafeWebsite = feature.properties.website;
+		var cafeUrl = feature.properties.url;
+		var cafeWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
+		var cafeOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
+		if (name == null ){
+		var spopup = "Ei tietoa";
+		}
+		if (cafeWebsite == undefined && cafeUrl == undefined){
+		var spopup = "<dd>Kahvila: " + name + "</dd>"
+					 + "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
+		  }
+		else {
+		var spopup = "<dd>Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>' + "</dd>"
+					 + "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
+		  }
+		layer.bindPopup(spopup).openPopup();
+		}}
+	);
 
 	var overlays = {
 		'Tien päällyste': roadCover,
 		'Nopeusrajoitukset' : speedLimit,
 		'Tietyöt': workingSitesGroup,
 		'Liikennehäiriöt': disturbances,
-		'Mutkareitit': geojson
+		'Mutkareitit': geojson,
+		'Huolto-asemat': stations,
+		'Kahvilat': cafes
 	};
 	
 	var baseUrls = {

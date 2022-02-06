@@ -13,7 +13,7 @@ html, body, #map {
     background-image: url(../images/icons8-info-24.png)
 }
 .custom-popup .leaflet-popup-content-wrapper {
-background: #276347;
+background: #498d79;
 color: #fff;
 font-size: 14px;
 line-height: 24px;
