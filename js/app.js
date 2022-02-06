@@ -183,8 +183,25 @@
 	}
 
 	var selected = null;
-	  
+	
+	function createClusterIcon(feature, latlng) {
+		if (!feature.properties.cluster) return L.marker(latlng);
+	
+		const count = feature.properties.point_count;
+		const size =
+			count < 100 ? 'small' :
+			count < 1000 ? 'medium' : 'large';
+		const icon = L.divIcon({
+			html: `<div><span>${  feature.properties.point_count_abbreviated  }</span></div>`,
+			className: `marker-cluster marker-cluster-${  size}`,
+			iconSize: L.point(40, 40)
+		});
+	
+		return L.marker(latlng, {icon});
+	};
+
 	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
+		pointToLayer: createClusterIcon,
 		snapDistance: 500,
 		filter: function(feature, layer) {
 		return (feature.geometry.type)=="LineString";
@@ -293,14 +310,33 @@
 		}}
 	);
 
+	var stationsCluster = new L.MarkerClusterGroup({
+		showCoverageOnHover: false,
+		maxClusterRadius: 80
+	});
+
+	stations.on('data:loaded', function () {
+		stationsCluster.addLayer(stations)
+	});
+
+	var cafesCluster = new L.MarkerClusterGroup({
+		showCoverageOnHover: false,
+		maxClusterRadius: 80
+	});
+
+	cafes.on('data:loaded', function () {
+		cafesCluster.addLayer(cafes)
+	});
+
+
 	var overlays = {
 		'Tien päällyste': roadCover,
 		'Nopeusrajoitukset' : speedLimit,
 		'Tietyöt': workingSitesGroup,
 		'Liikennehäiriöt': disturbances,
 		'Mutkareitit': geojson,
-		'Huolto-asemat': stations,
-		'Kahvilat': cafes
+		'Huolto-asemat': stationsCluster,
+		'Kahvilat': cafesCluster
 	};
 	
 	var baseUrls = {

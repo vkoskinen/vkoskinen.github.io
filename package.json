@@ -30,6 +30,7 @@
     "leaflet-minimap": "^3.6.1",
     "leaflet-routing-machine": "^3.2.12",
     "leaflet.locatecontrol": "^0.76.0",
+    "leaflet.markercluster": "^1.5.3",
     "leaflet.offline": "^2.1.0",
     "leaflet.offline.tailslide": "^2.0.0-beta.5",
     "leaflet.zoomshowhide": "^0.1.0",
