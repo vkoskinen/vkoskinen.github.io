@@ -265,48 +265,16 @@
 	var stations = new L.GeoJSON.AJAX("data/fuel.geojson", {
 		minZoom: 8,
 		onEachFeature: function(feature, layer) {
-		var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
-		var stationWebsite = feature.properties.website;
-		var stationUrl = feature.properties.url;
-		var stationWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
-		var stationOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
-		var stationOperator = (feature.properties.operator !== undefined) ? feature.properties.operator:"Ei tietoa";
-		if (name == null || name == undefined){
-		var spopup = "Ei tietoa";
-		}
-		if (stationWebsite == undefined && stationUrl == undefined){
-		var spopup = "<dd>Asema: " + name + "</dd>"
-					 + "<dd>Aukiolo: " + stationOpeningHours + "</dd>"
-		  }
-		else {
-		var spopup = "<dd>Asema: " + '<a target="_blank" href='+ stationWeb + '>' + name +'</a>' + "</dd>"
-					 + "<dd>Aukiolo: " + stationOpeningHours + "</dd>"
-					 + "<dd>Operaattori: " + stationOperator + "</dd>"
-		  }
-		layer.bindPopup(spopup).openPopup();
+		var spopup = "Asema: " + feature.properties.name
+		layer.bindPopup(spopup,popupOptions).openPopup();
 		}}
 	);
 
 	var cafes = new L.GeoJSON.AJAX("data/cafe.geojson", {
 		minZoom: 8,
 		onEachFeature: function(feature, layer) {
-		var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
-		var cafeWebsite = feature.properties.website;
-		var cafeUrl = feature.properties.url;
-		var cafeWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
-		var cafeOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
-		if (name == null ){
-		var spopup = "Ei tietoa";
-		}
-		if (cafeWebsite == undefined && cafeUrl == undefined){
-		var spopup = "<dd>Kahvila: " + name + "</dd>"
-					 + "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
-		  }
-		else {
-		var spopup = "<dd>Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>' + "</dd>"
-					 + "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
-		  }
-		layer.bindPopup(spopup).openPopup();
+			var spopup = "Nimi: " + feature.properties.name
+		layer.bindPopup(spopup,popupOptions).openPopup();
 		}}
 	);
 
