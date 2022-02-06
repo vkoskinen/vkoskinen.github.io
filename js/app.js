@@ -106,7 +106,23 @@
 			return L.marker(latlng, {
 			  icon: icon
 			});
-		  }
+		  },
+		  onEachFeature: function (feature, layer) {
+			  var startTime = new Date(feature.properties.startTime);
+			  var endTime = new Date(feature.properties.endTime);
+			  if (feature.properties.comment == null ){
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+ "<br><br>Ajankohta: " +startTime.toLocaleString() + " - " +endTime.toLocaleString();
+				}
+			else {
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>" + feature.properties.comment
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+ "<br><br>Ajankohta: " +startTime.toLocaleString() + " - " +endTime.toLocaleString();
+			}
+		  layer.bindPopup(spopup,popupOptions);
+		}
 	});
 
 	workingSitesLines = L.esri.featureLayer({
@@ -117,21 +133,26 @@
 			  color: '#FF7F00',
 			  weight: 7
 			};
-		}
+		},
+		onEachFeature: function (feature, layer) {
+			var startTime = new Date(feature.properties.startTime);
+			var endTime = new Date(feature.properties.endTime);
+			if (feature.properties.comment == null ){
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+ "<br><br>Ajankohta: " +startTime.toLocaleString() + " - " +endTime.toLocaleString();
+				}
+			else {
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>" + feature.properties.comment
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+ "<br><br>Ajankohta: " +startTime.toLocaleString() + " - " +endTime.toLocaleString();
+			}
+		layer.bindPopup(spopup,popupOptions);
+	  }
 	});
 
 	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
-
-	disturbances = L.esri.featureLayer({
-		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/1',
-		isModern:true,
-		style: function(feature) {
-			return {
-			  color: '#E41A1C',
-			  weight: 7
-			};
-		}
-	});
 
 	function highlight (layer) {
 		layer.setStyle({
@@ -164,13 +185,13 @@
 	var selected = null;
 	  
 	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
-		snapDistance: 1,
+		snapDistance: 500,
 		filter: function(feature, layer) {
 		return (feature.geometry.type)=="LineString";
 		},
 		style: function (feature) {
 		  return {
-			  weight: 2,
+			  weight: 4,
 			  opacity: 1,
 			  color: 'blue',
 			  dashArray: 3,
@@ -186,8 +207,7 @@
 			var spopup = "Reitin nimi: " + name + ""
 				}
 			else {
-			var spopup = "<dd>Kahvila: " + '<a target="_blank" href='+ description + '>' + name +'</a>' + "</dd>"
-							+ "<dd>Aukiolo: " + description + "</dd>"
+			var spopup = "Virhe haussa"
 				}
 		layer.bindPopup(spopup,popupOptions);
 		layer.on({
@@ -203,6 +223,34 @@
 		  });
 	  }
 	});
+
+	disturbances = L.esri.featureLayer({
+		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/1',
+		isModern:true,
+		style: function(feature) {
+			return {
+			  color: '#E41A1C',
+			  weight: 7
+			};
+		},
+		onEachFeature: function (feature, layer) {
+			var startTime = new Date(feature.properties.startTime);
+			var endTime = new Date(feature.properties.endTime);
+			var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+						+ "<br><br>Paikka: " + feature.properties.primaryPointMunicipality
+						+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+						+ "<br><br>Alkanut: " +startTime.toLocaleString()
+						+ "<br>Päättynyt: " +endTime.toLocaleString();
+
+		layer.bindPopup(spopup,popupOptions);
+	  }
+	});
+
+	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
+
+	// workingSitesGroup.bindPopup(function (layer) {
+	// 	return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
+	//   },popupOptions);
 
 	function geomFilter(feature) {
 		if (features.type === "LineString") return true
@@ -310,15 +358,7 @@
 		animationInterval: 300,
 		opacity: 0.5
 	}).addTo(map);
-
-	workingSitesGroup.bindPopup(function (layer) {
-		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
-	  },popupOptions);
-
-	disturbances.bindPopup(function (layer) {
-		return L.Util.template('<p><strong>{title}</strong><br><br>Kunta: {primaryPointMunicipality}<br><br>Paikka {locationDescription}', layer.feature.properties);
-	},popupOptions);
-
+	
 	var speedLimitLegend = L.control({position: 'bottomright', minZoom: 10});
 		speedLimitLegend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'info legend');
@@ -328,6 +368,15 @@
 
 		return div;
 	};
+
+		// Clear
+		function createClearButton(label, container) {
+			var btn = L.DomUtil.create('button', '', container);
+			btn.setAttribute('type', 'button');
+			btn.innerHTML = label;
+			btn.title = "Clear waypoints";
+			return btn;
+		}
 
 		// Reserve
 		function createReverseButton(label, container) {
@@ -381,6 +430,9 @@
 	
 			var container = L.Routing.Plan.prototype.createGeocoders.call(this),
 				
+				//Create a clear waypoints button
+				clearButton = createClearButton('<i class="fa fa-trash-alt" aria-hidden="true"></i>', container);
+
 				// Create a reverse waypoints button
 				reverseButton = createReverseButton('<i class="fa fa-arrows-alt-v" aria-hidden="true"></i>', container);
 	
@@ -396,6 +448,11 @@
 				// Fastest
 				fastestButton = createFastestButton('<i class="fa fa-fast-forward" aria-hidden="true"></i>', container);
 				
+				L.DomEvent.on(clearButton, 'click', function() {
+					this.setWaypoints();
+					console.log("Waypoints cleared");
+				}, this);
+
 				L.DomEvent.on(reverseButton, 'click', function() {
 					var waypoints = this.getWaypoints();
 					this.setWaypoints(waypoints.reverse());
@@ -446,6 +503,7 @@
 			router: new L.Routing.Here('eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8',{}),
 			plan: plan,
 			show: false,
+			hide:true,
 			collapsible: true,
 			collapseBtn: function(itinerary) {
 				var collapseBtn = L.DomUtil.create('span', itinerary.options.collapseBtnClass);
