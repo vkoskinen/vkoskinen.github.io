@@ -164,6 +164,7 @@
 	var selected = null;
 	  
 	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
+		snapDistance: 1,
 		filter: function(feature, layer) {
 		return (feature.geometry.type)=="LineString";
 		},
