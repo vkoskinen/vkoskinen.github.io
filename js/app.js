@@ -287,7 +287,7 @@
 		console.log(geojson);
 	;}
 
-	test=toGeo('data/test.xml')
+	//test=toGeo('data/test.xml')
 
 	var stations = new L.GeoJSON.AJAX("data/fuel.geojson", {
 		minZoom: 8,
