@@ -92,19 +92,37 @@
 		minZoom: 8
     });
 
-	var icon = L.icon({
+	var workingSiteIcon = L.icon({
 		iconUrl: 'https://img.icons8.com/color/96/000000/under-construction.png',
 		iconSize: [27, 31],
 		iconAnchor: [13.5, 17.5],
 		popupAnchor: [0, -11]
 	  });
-	  
+
+	var stationIcon = new L.Icon({
+		iconUrl: 'js/leaflet-color-markers-master/img/marker-icon-2x-green.png',
+		shadowUrl: 'js/leaflet-color-markers-master/img/marker-shadow.png',
+		iconSize: [25, 41],
+		iconAnchor: [12, 41],
+		popupAnchor: [1, -34],
+		shadowSize: [41, 41]
+	});
+
+	var cafeIcon = new L.Icon({
+		iconUrl: 'js/leaflet-color-markers-master/img/marker-icon-2x-red.png',
+		shadowUrl: 'js/leaflet-color-markers-master/img/marker-shadow.png',
+		iconSize: [25, 41],
+		iconAnchor: [12, 41],
+		popupAnchor: [1, -34],
+		shadowSize: [41, 41]
+	});
+
 	workingSitesPoints = L.esri.featureLayer({
 		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/3',
 		isModern:true,
 		pointToLayer: function (geojson, latlng) {
 			return L.marker(latlng, {
-			  icon: icon
+			  icon: workingSiteIcon
 			});
 		  },
 		  onEachFeature: function (feature, layer) {
@@ -264,6 +282,11 @@
 
 	var stations = new L.GeoJSON.AJAX("data/fuel.geojson", {
 		minZoom: 8,
+		pointToLayer: function (geojson, latlng) {
+			return L.marker(latlng, {
+			  icon: stationIcon
+			});
+		},
 		onEachFeature: function(feature, layer) {
 		var spopup = "Asema: " + feature.properties.name
 		layer.bindPopup(spopup,popupOptions).openPopup();
@@ -272,6 +295,11 @@
 
 	var cafes = new L.GeoJSON.AJAX("data/cafe.geojson", {
 		minZoom: 8,
+		pointToLayer: function (geojson, latlng) {
+			return L.marker(latlng, {
+			  icon: cafeIcon
+			});
+		},
 		onEachFeature: function(feature, layer) {
 			var spopup = "Nimi: " + feature.properties.name
 		layer.bindPopup(spopup,popupOptions).openPopup();
