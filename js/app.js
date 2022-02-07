@@ -93,7 +93,7 @@
     });
 
 	var workingSiteIcon = L.icon({
-		iconUrl: 'https://img.icons8.com/color/96/000000/under-construction.png',
+		iconUrl: 'images/under-construction.png',
 		iconSize: [27, 31],
 		iconAnchor: [13.5, 17.5],
 		popupAnchor: [0, -11]
