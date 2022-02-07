@@ -6,16 +6,13 @@
 	})
 	}
 
-
-	/* global L,LeafletOffline, $  */
-
 	const here = {
 		apiKey:'eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8'
 	  }
 	  
 	const style = 'normal.day';
 	
-	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';  //alternative offline layer
 	const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
 
 	function showTileList() {
@@ -69,7 +66,6 @@
 	});
 
 	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
-	taustakarttaMini= new L.tileLayer.mml_wmts({ layer: "taustakartta" });
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" });
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
 
@@ -124,15 +120,15 @@
 			return L.marker(latlng, {
 			  icon: workingSiteIcon
 			});
-		  },
-		  onEachFeature: function (feature, layer) {
-			  var startTime = new Date(feature.properties.startTime);
-			  var endTime = new Date(feature.properties.endTime);
-			  if (feature.properties.comment == null ){
+		},
+		onEachFeature: function (feature, layer) {
+			var startTime = new Date(feature.properties.startTime);
+			var endTime = new Date(feature.properties.endTime);
+			if (feature.properties.comment == null ){
 				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
 				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
 				+ "<br><br>Ajankohta: " +startTime.toLocaleString() + " - " +endTime.toLocaleString();
-				}
+			}
 			else {
 				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
 				+ "<br><br>" + feature.properties.comment
@@ -159,7 +155,7 @@
 				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
 				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
 				+ "<br><br>Ajankohta: " +startTime.toLocaleString() + " - " +endTime.toLocaleString();
-				}
+			}
 			else {
 				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
 				+ "<br><br>" + feature.properties.comment
@@ -184,22 +180,23 @@
 	}
 
 	function dehighlight (layer) {
-	  if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
-		  geojson.resetStyle(layer);
-	  }
-	}
-
-	function select (layer) {
-	  if (selected !== null) {
-		var previous = selected;
-	  }
-		map.fitBounds(layer.getBounds());
-		selected = layer;
-		if (previous) {
-		  dehighlight(previous);
+		if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
+			geojson.resetStyle(layer);
 		}
 	}
 
+	function select (layer) {
+		if (selected !== null) {
+			var previous = selected;
+		}
+			map.fitBounds(layer.getBounds());
+			selected = layer;
+		if (previous) {
+			dehighlight(previous);
+		}
+	}
+
+	// zoom to feature
 	var selected = null;
 	
 	function createClusterIcon(feature, latlng) {
@@ -219,7 +216,7 @@
 	};
 
 	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
-		pointToLayer: createClusterIcon,
+		//pointToLayer: createClusterIcon,
 		snapDistance: 500,
 		filter: function(feature, layer) {
 		return (feature.geometry.type)=="LineString";
@@ -231,7 +228,7 @@
 			  color: 'blue',
 			  dashArray: 3,
 		  };
-	  },
+	    },
 		onEachFeature: function (feature, layer) {
 			var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
 			var description = feature.properties.description;
@@ -363,7 +360,6 @@
 		cafesCluster.addLayer(cafes)
 	});
 
-
 	var overlays = {
 		'Tien päällyste': roadCover,
 		'Nopeusrajoitukset' : speedLimit,
@@ -400,13 +396,13 @@
 		'<i class="fa fa-download" aria-hidden="true" title="Save tiles"></i>',
 	rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
 	});
-	//control.addTo(map);
 
 	// layer switcher control
-	const layerswitcher = L.control
-	.layers(baseUrls, overlays
-	, { collapsed: true })
-	.addTo(map);
+	const layerswitcher = L.control.layers(
+		baseUrls, 
+		overlays, 
+		{ collapsed: true }
+	).addTo(map);
 
 	let storageLayer;
 
@@ -423,7 +419,6 @@
 	};
 
 	addStorageLayer();
-
 
 	baseLayer.on('storagesize', (e) => {
 	if (storageLayer) {
@@ -443,6 +438,7 @@
 	progress += 1;
 	});
 
+	// locate
 	lc = L.control.locate({
 		strings: {
 			title: "Oma sijainti"
@@ -452,12 +448,14 @@
 	}).addTo(map);
 	map.zoomControl.setPosition('bottomleft');
 	
+	// info button
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
 		title: '<h2>Motokartat</h2>',
 		html:'<p><b>Kartta-aineistot (Map data)</b></p><a href="https://www.here.com/">HERE</a><br><a href="https://www.maanmittauslaitos.fi/avoindata-lisenssi-cc40">Maanmittauslaitos Nimeä CC 4.0 -lisenssi</a>: Taustakartta,peruskartta ja selkokartta</a><br><a href="https://www.fintraffic.fi/fi/fintraffic/digitraffic-ja-avoin-data">Fintraffic Nimeä 4.0 Kansainvälinen (CC BY 4.0)</a> : Tietyöt ja liikennehäiriöt</a><br><a href="https://wiki.openstreetmap.org/wiki/Overpass_API">OpenStreetMap Overpass API</a> : Kahvilat ja huoltoasemat</a><br><a href="http://www.moottoripyora.org/keskustelu/showthread.php/274924-Org!-Mutkareittikartta">Moottoripyörät.org</a> : Org! Mutkareittikartta-keskustelu</a><br><a href="https://vayla.fi/">Väylävirasto</a>: Tien päällyste ja nopeusrajoitukset, <a href="https://creativecommons.org/licenses/by/4.0/deed.fi">Creative Commons 4.0</a><br><a href="https://www.ilmatieteenlaitos.fi/avoin-data">Ilmatieteen laitos</a>: Säädata -aineisto, <a href="https://creativecommons.org/licenses/by/4.0/deed.fi">Creative Commons 4.0</a><br><a href="https://www.rainviewer.com/">RainViewer</a>: Säädata -animaatio</a><p><b>Kirjastot (Libraries)</b></p><a>Map by <a href="http://leafletjs.com/"> Leaflet</a><br><a>Fonts by <a href="https://fontawesome.com/">Font Awesome</a><br><a> Icons by <a target="_blank" href="https://icons8.com">Icons8</a><br><a>Listaa loput...</a><p><b>Reititys (Routing)</b></p><a href="https://www.liedman.net/leaflet-routing-machine/">Leaflet Routing Machine</a> with <a href="https://www.here.com/">HERE</a><p><b>Liittyvät lisenssit (related licenses)</b></p><a href="https://opensource.org/licenses/mit-license.php">MIT-lisenssi</a>'
 	}).addTo(map);
 
+	// rain viewer
 	L.control.rainviewer({ 
 		position: 'bottomleft',
 		nextButtonText: '>',
@@ -469,71 +467,61 @@
 		opacity: 0.5
 	}).addTo(map);
 	
-	var speedLimitLegend = L.control({position: 'bottomright', minZoom: 10});
-		speedLimitLegend.onAdd = function (map) {
-		var div = L.DomUtil.create('div', 'info legend');
+	// Controls for routing	
+	// Clear
+	function createClearButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Clear waypoints";
+		return btn;
+	}
 
-			div.innerHTML +=
-			'<img src="https://julkinen.vayla.fi/oskari/action?action_route=GetLayerTile&legend=true&style=nopeusrajoitukset&id=68">';
-
-		return div;
-	};
-
-		// Clear
-		function createClearButton(label, container) {
-			var btn = L.DomUtil.create('button', '', container);
-			btn.setAttribute('type', 'button');
-			btn.innerHTML = label;
-			btn.title = "Clear waypoints";
-			return btn;
-		}
-
-		// Reserve
-		function createReverseButton(label, container) {
-			var btn = L.DomUtil.create('button', '', container);
-			btn.setAttribute('type', 'button');
-			btn.innerHTML = label;
-			btn.title = "Reverse waypoints";
-			return btn;
-		}
-		
-		// avoid highways and unpaved roads
-		function createAvoidAll(label, container) {
-			var btn = L.DomUtil.create('button', '', container);
-			btn.setAttribute('type', 'button');
-			btn.innerHTML = label;
-			btn.title = "Vältä valtateitä ja päällystämättömiä teitä";
-			return btn;
-		}
-		
-		// avoid highways
-		function createAvoidHighWayButton(label, container) {
-			var btn = L.DomUtil.create('button', '', container);
-			btn.setAttribute('type', 'button');
-			btn.innerHTML = label;
-			btn.title = "Vältä valtateitä";
-			return btn;
-		}
-		
-		// avoid unpaved roads
-		function createUnpavedRoadsButton(label, container) {
-			var btn = L.DomUtil.create('button', '', container);
-			btn.setAttribute('type', 'button');
-			btn.innerHTML = label;
-			btn.title = "Vältä päällystättömiä teitä";
-			return btn;
-		}
-		
-		// fastest
-		function createFastestButton(label, container) {
-			var btn = L.DomUtil.create('button', '', container);
-			btn.setAttribute('type', 'button');
-			btn.innerHTML = label;
-			btn.title = "Nopein";
-			return btn;
-		}
+	// Reserve
+	function createReverseButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Reverse waypoints";
+		return btn;
+	}
 	
-
+	// avoid highways and unpaved roads
+	function createAvoidAll(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Vältä valtateitä ja päällystämättömiä teitä";
+		return btn;
+	}
+	
+	// avoid highways
+	function createAvoidHighWayButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Vältä valtateitä";
+		return btn;
+	}
+	
+	// avoid unpaved roads
+	function createUnpavedRoadsButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Vältä päällystättömiä teitä";
+		return btn;
+	}
+	
+	// fastest
+	function createFastestButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		btn.title = "Nopein";
+		return btn;
+	}
+	
 	var geoPlan = L.Routing.Plan.extend({
 
 		createGeocoders: function() {
@@ -646,6 +634,17 @@
 		return btn;
 	}
 	
+	// legends
+	var speedLimitLegend = L.control({position: 'bottomright', minZoom: 10});
+		speedLimitLegend.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'info legend');
+
+			div.innerHTML +=
+			'<img src="https://julkinen.vayla.fi/oskari/action?action_route=GetLayerTile&legend=true&style=nopeusrajoitukset&id=68">';
+
+		return div;
+	};
+
 	var roadCoverLegend = L.control({position: 'bottomright', minZoom: 10});
 	roadCoverLegend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'info legend');
@@ -656,6 +655,7 @@
 		return div;
 	};
 
+	// event listening
 	map.on('overlayadd', function (eventLayer) {
 		if (eventLayer.name === 'Nopeusrajoitukset') {
 			speedLimitLegend.addTo(map);
@@ -680,8 +680,6 @@
 		} 
 	});
 
-	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
-
 	map.on('moveend',
 		function () {
 			if (map.getZoom() >= 14) {
@@ -692,3 +690,7 @@
 			}
 		}
 	);
+
+	// attributions
+	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
+
