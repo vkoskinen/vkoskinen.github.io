@@ -84,8 +84,8 @@
 		minZoom: 8
     });
 	
-	speedLimit = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/digiroad/ows?", {
-    	layers: 'DR_NOPEUSRAJOITUS',
+	speedLimit = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
+    	layers: 'TL168',
         format: 'image/png',
         transparent: true,
         attribution: '<a target="_blank" href="https://vayla.fi/vaylista/aineistot/avoindata/kayttoehdot">Väylävirasto</a>',
@@ -306,11 +306,11 @@
 			var spopup = "Ei tietoa";
 			}
 			if (cafeWebsite == undefined && cafeUrl == undefined){
-			var spopup = "Kahvila: " + name 
+			var spopup = "Asema: " + name 
 						+ "<br>Aukiolo: " + cafeOpeningHours 
 			}
 			else {
-			var spopup = "Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>'
+			var spopup = "Asema: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>'
 						+ "<br>Aukiolo: " + cafeOpeningHours 
 			}
 		layer.bindPopup(spopup,popupOptions).openPopup();
@@ -331,15 +331,15 @@
 			var cafeWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
 			var cafeOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
 			if (name == null ){
-			var spopup = "Ei tietoa";
-			}
-			if (cafeWebsite == undefined && cafeUrl == undefined){
-			var spopup = "<dd>Kahvila: " + name + "</dd>"
-						+ "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
-			}
-			else {
-			var spopup = "<dd>Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>' + "</dd>"
-						+ "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
+				var spopup = "Ei tietoa";
+				}
+				if (cafeWebsite == undefined && cafeUrl == undefined){
+				var spopup = ": " + name 
+							+ "<br>Aukiolo: " + cafeOpeningHours 
+				}
+				else {
+				var spopup = "Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>'
+							+ "<br>Aukiolo: " + cafeOpeningHours 
 			}
 		layer.bindPopup(spopup,popupOptions).openPopup();
 		}}
@@ -474,7 +474,7 @@
 		var div = L.DomUtil.create('div', 'info legend');
 
 			div.innerHTML +=
-			'<img src="https://julkinen.vayla.fi/oskari/action?action_route=GetLayerTile&legend=true&style=digiroad%3ADR_Nopeusrajoitus&id=319">';
+			'<img src="https://julkinen.vayla.fi/oskari/action?action_route=GetLayerTile&legend=true&style=nopeusrajoitukset&id=68">';
 
 		return div;
 	};
