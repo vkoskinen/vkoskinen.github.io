@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<osm version="0.6" generator="Overpass API 0.7.57.1 74a55df1">
+<osm version="0.6" generator="Overpass API 0.7.57 93a4d346">
 <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
-<meta osm_base="2022-02-06T17:07:46Z"/>
+<meta osm_base="2022-02-07T18:08:53Z"/>
 
   <node id="135019" lat="60.1966400" lon="24.8856567">
     <tag k="addr:city" v="Helsinki"/>
@@ -172,6 +172,7 @@
     <tag k="name:fi" v="St1 Oravainen"/>
     <tag k="name:sv" v="St1 Oravais"/>
     <tag k="phone" v="(06) 385 1200"/>
+    <tag k="snowmobile" v="yes"/>
   </node>
   <node id="26197442" lat="63.5908207" lon="22.7547839">
     <tag k="addr:city" v="Bennäs"/>
@@ -3672,6 +3673,7 @@
     <tag k="name:sv" v="ABC! Oravais"/>
     <tag k="operator" v="ABC!"/>
     <tag k="phone" v="020-780 8400"/>
+    <tag k="snowmobile" v="yes"/>
   </node>
   <node id="262880184" lat="61.8124058" lon="22.4019496">
     <tag k="amenity" v="fuel"/>
@@ -4448,8 +4450,11 @@
     <tag k="name" v="Neste Oil"/>
     <tag k="operator" v="Neste Oil"/>
   </node>
-  <node id="287020520" lat="61.6759691" lon="27.2436518">
+  <node id="287020520" lat="61.6759473" lon="27.2436008">
     <tag k="amenity" v="fuel"/>
+    <tag k="brand" v="ABC"/>
+    <tag k="brand:wikidata" v="Q10397504"/>
+    <tag k="brand:wikipedia" v="fi:ABC-ketju"/>
     <tag k="name" v="ABC Pitkäjärvi Mikkeli"/>
     <tag k="snowmobile" v="yes"/>
   </node>
@@ -6507,6 +6512,7 @@
     <tag k="operator" v="Neste"/>
     <tag k="phone" v="(06) 766 7930"/>
     <tag k="shop" v="convenience"/>
+    <tag k="snowmobile" v="yes"/>
     <tag k="website" v="https://www.neste.fi/hakuasema.aspx?id=78"/>
   </node>
   <node id="429948649" lat="60.1070760" lon="19.9419333">
@@ -8746,6 +8752,7 @@
     <tag k="name:fi" v="ABC! S-market Uusikaarlepyy"/>
     <tag k="name:sv" v="ABC! S-market Nykarleby"/>
     <tag k="operator" v="ABC!"/>
+    <tag k="snowmobile" v="yes"/>
     <tag k="website" v="https://www.abcasemat.fi/fi/asemat/abc-s-market-uusikaarlepyy"/>
     <tag k="wheelchair" v="yes"/>
   </node>
@@ -9128,6 +9135,7 @@
   </node>
   <node id="683588447" lat="63.4489147" lon="22.4378464">
     <tag k="amenity" v="fuel"/>
+    <tag k="snowmobile" v="yes"/>
   </node>
   <node id="685604542" lat="60.5613514" lon="27.0457393">
     <tag k="amenity" v="fuel"/>
@@ -10478,6 +10486,7 @@
     <tag k="name" v="ABC Jeppo"/>
     <tag k="name:fi" v="ABC Jepua"/>
     <tag k="name:sv" v="ABC Jeppo"/>
+    <tag k="snowmobile" v="yes"/>
   </node>
   <node id="944940445" lat="62.5864512" lon="27.0519644">
     <tag k="addr:city" v="Suonenjoki"/>
@@ -12276,6 +12285,7 @@
     <tag k="opening_hours" v="24/7"/>
     <tag k="operator" v="ABC!"/>
     <tag k="phone" v="020 780 8450"/>
+    <tag k="snowmobile" v="yes"/>
     <tag k="website" v="https://www.abcasemat.fi/"/>
   </node>
   <node id="1524619477" lat="62.5925438" lon="23.6040440">
@@ -20333,6 +20343,11 @@
     <tag k="brand:wikidata" v="Q10397504"/>
     <tag k="brand:wikipedia" v="fi:ABC-ketju"/>
     <tag k="name" v="ABC"/>
+  </node>
+  <node id="9484314496" lat="63.4831372" lon="22.3841602">
+    <tag k="amenity" v="fuel"/>
+    <tag k="name" v="vexala boden"/>
+    <tag k="snowmobile" v="yes"/>
   </node>
 
 </osm>
