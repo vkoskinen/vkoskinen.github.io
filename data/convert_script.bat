@@ -1,2 +1,2 @@
-ogr2ogr -f GeoJSON fuel.geojson fuel.pbf points
-ogr2ogr -f GeoJSON cafe.geojson cafes.pbf points
+osmtogeojson data/fuel.json > data/fuel.geojson
+osmtogeojson data/cafes.json > data/cafe.geojson

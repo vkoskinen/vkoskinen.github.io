@@ -297,7 +297,22 @@
 			});
 		},
 		onEachFeature: function(feature, layer) {
-		var spopup = "Asema: " + feature.properties.name
+			var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
+			var cafeWebsite = feature.properties.website;
+			var cafeUrl = feature.properties.url;
+			var cafeWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
+			var cafeOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
+			if (name == null ){
+			var spopup = "Ei tietoa";
+			}
+			if (cafeWebsite == undefined && cafeUrl == undefined){
+			var spopup = "Kahvila: " + name 
+						+ "<br>Aukiolo: " + cafeOpeningHours 
+			}
+			else {
+			var spopup = "Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>'
+						+ "<br>Aukiolo: " + cafeOpeningHours 
+			}
 		layer.bindPopup(spopup,popupOptions).openPopup();
 		}}
 	);
@@ -310,7 +325,22 @@
 			});
 		},
 		onEachFeature: function(feature, layer) {
-			var spopup = "Nimi: " + feature.properties.name
+			var name = (feature.properties.name !== undefined) ? feature.properties.name: "Ei tietoa";
+			var cafeWebsite = feature.properties.website;
+			var cafeUrl = feature.properties.url;
+			var cafeWeb = (feature.properties.url !== undefined) ? feature.properties.url: feature.properties.website;
+			var cafeOpeningHours = (feature.properties.opening_hours !== undefined) ? feature.properties.opening_hours:"Ei tietoa";
+			if (name == null ){
+			var spopup = "Ei tietoa";
+			}
+			if (cafeWebsite == undefined && cafeUrl == undefined){
+			var spopup = "<dd>Kahvila: " + name + "</dd>"
+						+ "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
+			}
+			else {
+			var spopup = "<dd>Kahvila: " + '<a target="_blank" href='+ cafeWeb + '>' + name +'</a>' + "</dd>"
+						+ "<dd>Aukiolo: " + cafeOpeningHours + "</dd>"
+			}
 		layer.bindPopup(spopup,popupOptions).openPopup();
 		}}
 	);
