@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "html-to-text": "^8.1.0",
     "jquery-1.10.2": "^1.10.2",
     "leaflet": "^1.7.1",
     "leaflet-html-legend": "^0.3.5",
