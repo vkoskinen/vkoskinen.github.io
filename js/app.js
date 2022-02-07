@@ -331,7 +331,7 @@
 				var spopup = "Ei tietoa";
 				}
 				if (cafeWebsite == undefined && cafeUrl == undefined){
-				var spopup = ": " + name 
+				var spopup = "Kahvila: " + name 
 							+ "<br>Aukiolo: " + cafeOpeningHours 
 				}
 				else {
