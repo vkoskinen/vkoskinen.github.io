@@ -288,6 +288,9 @@
 
 	var stations = new L.GeoJSON.AJAX("data/fuel.geojson", {
 		minZoom: 8,
+		filter: function(feature, layer) {
+			return (feature.properties.name)!=null
+		},
 		pointToLayer: function (geojson, latlng) {
 			return L.marker(latlng, {
 			  icon: stationIcon
@@ -316,6 +319,9 @@
 
 	var cafes = new L.GeoJSON.AJAX("data/cafe.geojson", {
 		minZoom: 8,
+		filter: function(feature, layer) {
+			return (feature.properties.name)!=null
+		},
 		pointToLayer: function (geojson, latlng) {
 			return L.marker(latlng, {
 			  icon: cafeIcon
