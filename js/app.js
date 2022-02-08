@@ -13,7 +13,9 @@
 	const style = 'normal.day';
 	
 	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';  //alternative offline layer
-	const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
+	const urlTemplate = "https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/taustakartta/default/"
+                + "WGS84_Pseudo-Mercator/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
+	//const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
 
 	function showTileList() {
 	LeafletOffline.getStorageInfo(urlTemplate).then((r) => {
