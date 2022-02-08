@@ -600,7 +600,7 @@
 			geocoder: new L.Control.Geocoder.Nominatim(),
 			//addWaypoints: false,
 			routeWhileDragging: false,
-			draggableWaypoints: false,
+			draggableWaypoints: true,
 		}),
 		// Routing machine HERE
 		routing = L.Routing.control({
