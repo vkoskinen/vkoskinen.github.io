@@ -67,9 +67,9 @@
 		downsample: false
 	});
 
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: 'images/peruskartta.png' }, attribution='test');
-	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: 'images/taustakartta.png'});
-	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: 'images/selkokartta.png'});
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.png' }, attribution='test');
+	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: '../images/taustakartta.png'});
+	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: '../images/selkokartta.png'});
 
 	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', 
 		{attribution: '&copy HERE',
