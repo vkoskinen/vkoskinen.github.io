@@ -5,9 +5,6 @@ body {
 html, body, #map {
     height: 100%;
 }
-.leaflet-top.leaflet-right .leaflet-control-layers .leaflet-control-layers-toggle {
-    background-image: url(../images/icons8-finland-map-50.png)
-}
 .leaflet-info-button {
     font-size:14px;
     background-image: url(../images/icons8-info-24.png)

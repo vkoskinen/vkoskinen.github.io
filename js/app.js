@@ -67,11 +67,15 @@
 		downsample: false
 	});
 
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta"}, attribution='test');
-	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta" });
-	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta" });
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: 'images/peruskartta.png' }, attribution='test');
+	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: 'images/taustakartta.png'});
+	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: 'images/selkokartta.png'});
 
-	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', {attribution: '&copy HERE'})
+	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', 
+		{attribution: '&copy HERE',
+		label: 'Toner Lite',  // optional label used for tooltip,
+		iconURL: 'images/here.png'
+	})
 	.addTo(map);
 
 	roadCover = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
@@ -219,7 +223,9 @@
 
 	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
 		//pointToLayer: createClusterIcon,
-		snapDistance: 500,
+		//snapDistance: 500,
+		//clickTolerance: 1000,
+		color: '#ffffff', weight: 3, opacity: 0.35, raised: false,
 		filter: function(feature, layer) {
 		return (feature.geometry.type)=="LineString";
 		},
@@ -276,6 +282,10 @@
 		layer.bindPopup(spopup,popupOptions);
 	  }
 	});
+
+	disturbancesHigh= new L.HighlightableLayers.HighlightablePolyline(
+		{ color: '#ffffff', weight: 3, opacity: 0.35, raised: false }
+	);
 
 	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
 
@@ -384,6 +394,21 @@
 	  'Peruskartta': maastokartta,
 	  'Selkokartta': selkokartta,
 	};
+
+	var basemaps = [
+		hereMap,
+		maastokartta,
+		taustakartta,
+		selkokartta
+	];
+
+	map.addControl(L.control.basemaps({
+		basemaps: basemaps,
+		tileX: 0,  // tile X coordinate
+		tileY: 0,  // tile Y coordinate
+		tileZ: 1   // tile zoom level
+	}));
+	
 	
 	// add buttons to save tiles in area viewed
 	const control = L.control.savetiles(baseLayer, {
@@ -407,7 +432,7 @@
 
 	// layer switcher control
 	const layerswitcher = L.control.layers(
-		baseUrls, 
+		null, 
 		overlays, 
 		{ collapsed: true }
 	).addTo(map);
@@ -605,7 +630,7 @@
 		// Routing machine HERE
 		routing = L.Routing.control({
 			waypoints: [],
-			position: 'bottomright',
+			position: 'topright',
 			router: new L.Routing.Here('eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8',{}),
 			plan: plan,
 			show: false,
@@ -702,3 +727,6 @@
 	// attributions
 	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
 
+	if (!map.restoreView()) {
+		map.setView([65.425,27.510], 5);
+	};

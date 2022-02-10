@@ -1,0 +1,7 @@
+.leaflet-pane.leaflet-lhl-raised-pane {
+	z-index: 620;
+}
+
+.leaflet-pane.leaflet-lhl-almost-over-pane {
+	z-index: 201;
+}
