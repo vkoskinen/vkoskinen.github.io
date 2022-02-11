@@ -67,6 +67,8 @@
 		downsample: false
 	});
 
+	var myRenderer = L.canvas({ padding: 0.5, tolerance: 20 });
+
 	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.PNG' }, attribution='test');
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: '../images/taustakartta.PNG'});
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: '../images/selkokartta.PNG'});
@@ -148,6 +150,7 @@
 	workingSitesLines = L.esri.featureLayer({
 		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/4',
 		isModern:true,
+		renderer: myRenderer,
 		style: function(feature) {
 			return {
 			  color: '#FF7F00',
@@ -222,9 +225,7 @@
 	};
 
 	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
-		//pointToLayer: createClusterIcon,
-		//snapDistance: 500,
-		//clickTolerance: 1000,
+		renderer: myRenderer,
 		color: '#ffffff', weight: 3, opacity: 0.35, raised: false,
 		filter: function(feature, layer) {
 		return (feature.geometry.type)=="LineString";
@@ -234,7 +235,7 @@
 			  weight: 4,
 			  opacity: 1,
 			  color: 'blue',
-			  dashArray: 3,
+			  //dashArray: 3,
 		  };
 	    },
 		onEachFeature: function (feature, layer) {
@@ -267,6 +268,7 @@
 	disturbances = L.esri.featureLayer({
 		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/1',
 		isModern:true,
+		renderer: myRenderer,
 		style: function(feature) {
 			return {
 			  color: '#E41A1C',
@@ -436,7 +438,7 @@
 		overlays, 
 		{ collapsed: true }
 	).addTo(map);
-
+	
 	let storageLayer;
 
 	const getGeoJsonData = () => LeafletOffline.getStorageInfo(urlTemplate)
