@@ -285,10 +285,6 @@
 	  }
 	});
 
-	disturbancesHigh= new L.HighlightableLayers.HighlightablePolyline(
-		{ color: '#ffffff', weight: 3, opacity: 0.35, raised: false }
-	);
-
 	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
 
 	function toGeo() {
