@@ -728,3 +728,4 @@
 	if (!map.restoreView()) {
 		map.setView([65.425,27.510], 5);
 	};
+
