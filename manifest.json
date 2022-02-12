@@ -1,6 +1,6 @@
 {
-    "name":"leaflet pwa map",
-    "short_name":"leaflet map",
+    "name":"Motokartat",
+    "short_name":"Motokartat",
     "start_url": "index.html",
     "background_color":"#6dcdb1",
     "theme_color":"#009578",
