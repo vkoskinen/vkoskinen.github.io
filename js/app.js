@@ -477,8 +477,11 @@
 			title: "Oma sijainti"
 		},
 		flyTo:true,
-		showPopup:false
-	}).addTo(map);
+		showPopup:false,
+		locateOptions: {
+			maxZoom: 15
+		}
+	 }).addTo(map);
 	
 	//map.zoomControl.setPosition('bottomleft');
 
@@ -490,15 +493,6 @@
       var materialZoomControl = new L.materialControl.Zoom({ position: "bottomleft", materialOptions: materialOptions});
       materialZoomControl.addTo(map);
 
-	        // Material layer control:
-			var materialLayerControl = new L.materialControl.Layers(baseUrls, overlays, {
-				position: "bottomright",
-				materialOptions: materialOptions,
-			  });
-			  materialLayerControl.addTo(map);
-		
-
-
 	// info button
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
@@ -508,7 +502,7 @@
 
 	// rain viewer
 	L.control.rainviewer({ 
-		position: 'bottomleft',
+		position: 'topleft',
 		nextButtonText: '>',
 		playStopButtonText: 'Päälle/Pois',
 		prevButtonText: '<',
