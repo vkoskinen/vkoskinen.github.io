@@ -42,6 +42,7 @@
 		zoom: 5,
 		 minZoom: 5,
 		 maxZoom: 16,
+		 zoomControl: false,
 	 });
 
 	 var popup = L.popup({
@@ -56,6 +57,7 @@
       'className' : 'custom-popup'
     };
 
+	
 	// offline baselayer, will use offline source if available
 	const baseLayer = L.tileLayer
 	.offline(urlTemplate, {
@@ -383,7 +385,7 @@
 		'Liikennehäiriöt': disturbances,
 		'Mutkareitit': geojson,
 		'Huolto-asemat': stationsCluster,
-		'Kahvilat': cafesCluster
+		'Kahvilat': cafesCluster,
 	};
 	
 	var baseUrls = {
@@ -428,7 +430,7 @@
 	rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
 	});
 
-	// layer switcher control
+	//layer switcher control
 	const layerswitcher = L.control.layers(
 		null, 
 		overlays, 
@@ -477,8 +479,17 @@
 		flyTo:true,
 		showPopup:false
 	}).addTo(map);
-	map.zoomControl.setPosition('bottomleft');
 	
+	//map.zoomControl.setPosition('bottomleft');
+
+	var materialOptions = {
+        color: "white",
+      };
+
+      // Material zoom control:
+      var materialZoomControl = new L.materialControl.Zoom({ position: "bottomleft", materialOptions: materialOptions});
+      materialZoomControl.addTo(map);
+
 	// info button
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
@@ -488,7 +499,7 @@
 
 	// rain viewer
 	L.control.rainviewer({ 
-		position: 'bottomleft',
+		position: 'topleft',
 		nextButtonText: '>',
 		playStopButtonText: 'Päälle/Pois',
 		prevButtonText: '<',
