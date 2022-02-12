@@ -490,6 +490,15 @@
       var materialZoomControl = new L.materialControl.Zoom({ position: "bottomleft", materialOptions: materialOptions});
       materialZoomControl.addTo(map);
 
+	        // Material layer control:
+			var materialLayerControl = new L.materialControl.Layers(baseUrls, overlays, {
+				position: "bottomright",
+				materialOptions: materialOptions,
+			  });
+			  materialLayerControl.addTo(map);
+		
+
+
 	// info button
 	var infoButton = L.control.infoButton({
 		linkTitle: 'Motokartat', 
@@ -499,7 +508,7 @@
 
 	// rain viewer
 	L.control.rainviewer({ 
-		position: 'topleft',
+		position: 'bottomleft',
 		nextButtonText: '>',
 		playStopButtonText: 'Päälle/Pois',
 		prevButtonText: '<',
