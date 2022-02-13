@@ -226,7 +226,7 @@
 		return L.marker(latlng, {icon});
 	};
 
-	var geojson = new L.GeoJSON.AJAX("js/mutkat.geojson", {
+	var geojson = new L.GeoJSON.AJAX("data/mutkat.geojson", {
 		renderer: myRenderer,
 		color: '#ffffff', weight: 3, opacity: 0.35, raised: false,
 		filter: function(feature, layer) {
@@ -237,7 +237,6 @@
 			  weight: 4,
 			  opacity: 1,
 			  color: 'blue',
-			  //dashArray: 3,
 		  };
 	    },
 		onEachFeature: function (feature, layer) {
@@ -381,7 +380,7 @@
 		token: 'pk.eyJ1IjoiaXZhbnNhbmNoZXoiLCJhIjoiY2l6ZTJmd3FnMDA0dzMzbzFtaW10cXh2MSJ9.VsWCS9-EAX4_4W1K-nXnsA'
 	};
 
-	var mapboxPbfLayer = L.vectorGrid.protobuf(MMLUrl,mapboxVectorTileOptions);
+	//var mapboxPbfLayer = L.vectorGrid.protobuf(MMLUrl,mapboxVectorTileOptions);
 
 	var stationsCluster = new L.MarkerClusterGroup({
 		showCoverageOnHover: false,
@@ -409,7 +408,7 @@
 		'Mutkareitit': geojson,
 		'Huolto-asemat': stationsCluster,
 		'Kahvilat': cafesCluster,
-		"MapBox Vector Tiles": mapboxPbfLayer,
+		//"MapBox Vector Tiles": mapboxPbfLayer,
 	};
 	
 	var baseUrls = {
