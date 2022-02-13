@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.57 93a4d346",
   "osm3s": {
-    "timestamp_osm_base": "2022-02-07T18:04:51Z",
+    "timestamp_osm_base": "2022-02-13T12:25:55Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -1383,8 +1383,8 @@
 {
   "type": "node",
   "id": 295220031,
-  "lat": 63.8261839,
-  "lon": 20.2616889,
+  "lat": 63.8262068,
+  "lon": 20.2615660,
   "tags": {
     "amenity": "cafe",
     "name": "Nya konditoriet",
@@ -15236,7 +15236,7 @@
   "tags": {
     "amenity": "cafe",
     "cuisine": "asian",
-    "name": "Зам-Зам"
+    "name": "Уют"
   }
 },
 {
@@ -15719,16 +15719,19 @@
     "addr:postcode": "01600",
     "addr:street": "Myyrmäenraitti",
     "alcohol": "no",
+    "alt_name": "Uimahallin kahvio",
     "amenity": "cafe",
     "bar": "no",
     "cuisine": "coffee_shop",
+    "description": "Uimahallin kahvio",
     "diet:halal": "no",
     "diet:kosher": "no",
     "internet_access": "yes",
     "level": "1",
-    "name": "Myyrmäen kahvila (Uimahallin kahvio)",
+    "name": "FuFu Cafe",
     "outdoor_seating": "no",
-    "wheelchair": "yes"
+    "wheelchair": "yes",
+    "wheelchair:description": "Elevator"
   }
 },
 {
@@ -19829,8 +19832,8 @@
 {
   "type": "node",
   "id": 2010742612,
-  "lat": 63.8257575,
-  "lon": 20.2614681,
+  "lat": 63.8257747,
+  "lon": 20.2614496,
   "tags": {
     "addr:city": "Umeå",
     "addr:country": "SE",
@@ -19839,7 +19842,7 @@
     "addr:street": "Kungsgatan",
     "amenity": "cafe",
     "level": "0",
-    "name": "Bra dag"
+    "name": "Smak Bar & Bistro"
   }
 },
 {
@@ -21866,18 +21869,6 @@
     "amenity": "cafe",
     "name": "Music Cafe",
     "opening_hours": "Mo-Fh 08:30-18:00; Fr 08:30-16:00"
-  }
-},
-{
-  "type": "node",
-  "id": 2207048630,
-  "lat": 61.6917564,
-  "lon": 27.2692225,
-  "tags": {
-    "amenity": "cafe",
-    "name": "Päämajamuseon kahvila",
-    "seasonal:summer": "yes",
-    "seasonal:winter": "no"
   }
 },
 {
@@ -27929,8 +27920,7 @@
     "check_date:opening_hours": "2021-04-19",
     "contact:phone:director": "+7 981 1713167",
     "email": "m.croissant.cafe@gmail.com",
-    "name": "Месье Круассан",
-    "name:fr": "M. De Croissant",
+    "name": "Еда, вино и круассаны",
     "opening_hours": "09:00-23:00",
     "operator": "Файя Флай",
     "outdoor_seating": "yes",
@@ -27941,7 +27931,6 @@
     "payment:visa_electron": "yes",
     "phone": "+7 812 6709821",
     "smoking": "no",
-    "website": "http://croissant-cafe.ru/",
     "wheelchair": "no"
   }
 },
@@ -28274,20 +28263,6 @@
     "cuisine": "coffee_shop",
     "name": "Harry´s River Cafe",
     "opening_hours": "09:00-17:00"
-  }
-},
-{
-  "type": "node",
-  "id": 2854533162,
-  "lat": 60.9417759,
-  "lon": 26.6184982,
-  "tags": {
-    "addr:city": "Voikkaa",
-    "addr:housenumber": "1",
-    "addr:street": "Voikkaantie",
-    "amenity": "cafe",
-    "cuisine": "coffee_shop",
-    "name": "Mintun Konditoria"
   }
 },
 {
@@ -31745,6 +31720,17 @@
 },
 {
   "type": "node",
+  "id": 3267014427,
+  "lat": 59.9118773,
+  "lon": 30.3500260,
+  "tags": {
+    "amenity": "cafe",
+    "cuisine": "georgian",
+    "name": "Галата"
+  }
+},
+{
+  "type": "node",
   "id": 3268247194,
   "lat": 63.5531923,
   "lon": 29.1000828,
@@ -32380,8 +32366,8 @@
 {
   "type": "node",
   "id": 3417610203,
-  "lat": 63.8259055,
-  "lon": 20.2606244,
+  "lat": 63.8258937,
+  "lon": 20.2605771,
   "tags": {
     "amenity": "cafe",
     "level": "1",
@@ -35077,13 +35063,13 @@
 {
   "type": "node",
   "id": 3744316417,
-  "lat": 60.0500350,
-  "lon": 30.4450014,
+  "lat": 60.0500238,
+  "lon": 30.4450425,
   "tags": {
     "amenity": "cafe",
     "brand": "Теремок",
     "email": "spb@teremok.ru",
-    "name": "Девяткино",
+    "name": "Теремок",
     "opening_hours": "Mo-Fr 08:00-22:00; Sa-Su 09:00-22:00",
     "operator": "Теремок - Кондитерская",
     "payment:maestro": "yes",
@@ -42558,10 +42544,11 @@
 {
   "type": "node",
   "id": 4429870062,
-  "lat": 60.0494124,
-  "lon": 30.4435134,
+  "lat": 60.0493837,
+  "lon": 30.4435654,
   "tags": {
-    "amenity": "cafe"
+    "amenity": "cafe",
+    "cuisine": "asian"
   }
 },
 {
@@ -44311,8 +44298,7 @@
   "lat": 59.9209648,
   "lon": 30.3377229,
   "tags": {
-    "amenity": "cafe",
-    "name": "СКА"
+    "amenity": "cafe"
   }
 },
 {
@@ -63557,6 +63543,17 @@
 },
 {
   "type": "node",
+  "id": 6419625083,
+  "lat": 60.0487066,
+  "lon": 30.4429441,
+  "tags": {
+    "amenity": "cafe",
+    "cuisine": "asian",
+    "name": "Чайхана"
+  }
+},
+{
+  "type": "node",
   "id": 6423470066,
   "lat": 61.4994814,
   "lon": 23.7567660,
@@ -68060,7 +68057,6 @@
   "tags": {
     "amenity": "cafe",
     "cuisine": "coffee_shop",
-    "name": "Тунетолэ",
     "outdoor_seating": "no",
     "takeaway": "yes"
   }
@@ -68297,7 +68293,7 @@
     "contact:phone": "+7 812 7757785",
     "contact:vk": "https://vk.com/tseh85",
     "contact:website": "https://tseh85.ru",
-    "cuisine": "coffee_shop",
+    "cuisine": "coffee_shop;pie",
     "name": "Цех85",
     "opening_hours": "Mo-Su 08:00-22:00",
     "operator": "Васин",
@@ -76755,7 +76751,7 @@
     "addr:street": "Гусарская улица",
     "addr:suburb": "Пушкин",
     "amenity": "cafe",
-    "name": "Нур"
+    "name": "IШашлычкофф"
   }
 },
 {
@@ -77164,6 +77160,8 @@
   "lon": 30.1104087,
   "tags": {
     "amenity": "cafe",
+    "brand": "Baggins Coffee",
+    "brand:wikidata": "Q100272631",
     "contact:email": "info@bagginscoffee.ru",
     "contact:facebook": "https://facebook.com/bagginscoffee/",
     "contact:instagram": "https://instagram.com/baggins_coffee/",
@@ -77174,7 +77172,8 @@
     "cuisine": "coffee_shop",
     "name": "Baggins Coffee",
     "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-22:00",
-    "operator": "ИП Белов"
+    "operator": "ИП Белов",
+    "takeaway": "yes"
   }
 },
 {
@@ -80582,8 +80581,8 @@
 {
   "type": "node",
   "id": 8871363886,
-  "lat": 60.4496478,
-  "lon": 22.2735607,
+  "lat": 60.4497827,
+  "lon": 22.2738531,
   "tags": {
     "addr:city": "Turku",
     "addr:country": "FI",
@@ -80594,7 +80593,7 @@
     "name": "Café Pegasus",
     "opening_date": "2021-07-01",
     "postal_code": "20100",
-    "website": "https://www.kahvila-otava.fi",
+    "website": "https://www.kahvila-otava.fi/cafe-pegasus",
     "wheelchair": "yes"
   }
 },
@@ -81322,7 +81321,7 @@
     "contact:phone": "+7 812 7757785",
     "contact:vk": "https://vk.com/tseh85",
     "contact:website": "https://tseh85.ru",
-    "cuisine": "coffee_shop",
+    "cuisine": "coffee_shop;pie",
     "delivery": "yes",
     "name": "Цех85",
     "opening_hours": "Mo-Fr 08:00-23:00; Sa,Su 09:00-22:00",
@@ -82684,16 +82683,6 @@
 },
 {
   "type": "node",
-  "id": 9041110317,
-  "lat": 59.9205346,
-  "lon": 30.3456710,
-  "tags": {
-    "amenity": "cafe",
-    "name": "Восход7"
-  }
-},
-{
-  "type": "node",
   "id": 9044801952,
   "lat": 60.3010589,
   "lon": 24.8563090,
@@ -82919,18 +82908,6 @@
   "lon": 20.0130612,
   "tags": {
     "amenity": "cafe"
-  }
-},
-{
-  "type": "node",
-  "id": 9102653745,
-  "lat": 60.0516199,
-  "lon": 30.4489824,
-  "tags": {
-    "amenity": "cafe",
-    "cuisine": "donut",
-    "outdoor_seating": "no",
-    "takeaway": "yes"
   }
 },
 {
@@ -83750,34 +83727,6 @@
 },
 {
   "type": "node",
-  "id": 9266267617,
-  "lat": 60.0512912,
-  "lon": 30.4518614,
-  "tags": {
-    "amenity": "cafe",
-    "contact:email": "info@greco.spb.ru",
-    "contact:phone": "+7 969 7152836;+7 965 0940507",
-    "contact:vk": "https://vk.com/public197642129",
-    "contact:website": "https://greco.spb.ru",
-    "cuisine": "greek",
-    "name": "Greco",
-    "opening_hours": "Mo-Su 09:00-21:00"
-  }
-},
-{
-  "type": "node",
-  "id": 9266287717,
-  "lat": 60.0513580,
-  "lon": 30.4516488,
-  "tags": {
-    "amenity": "cafe",
-    "name": "Кофейный автомат",
-    "name:en": "Coffee vending machine",
-    "opening_hours": "24/7"
-  }
-},
-{
-  "type": "node",
   "id": 9268831887,
   "lat": 59.9646018,
   "lon": 30.3133089,
@@ -83803,23 +83752,6 @@
   "lon": 26.2898570,
   "tags": {
     "amenity": "cafe"
-  }
-},
-{
-  "type": "node",
-  "id": 9277105304,
-  "lat": 59.9108161,
-  "lon": 30.3487906,
-  "tags": {
-    "amenity": "cafe",
-    "contact:email": "monatea.spb@gmail.com",
-    "contact:instagram": "https://www.instagram.com/monatea_spb/",
-    "contact:vk": "https://vk.com/monatea_spb",
-    "cuisine": "bubble_tea",
-    "name": "Mona Tea",
-    "opening_hours": "Mo-Su 11:00-22:00",
-    "opening_hours:covid19": "open",
-    "phone": "8(812) 507 60 41"
   }
 },
 {
@@ -84492,6 +84424,8 @@
     "addr:street": "Iso Roobertinkatu",
     "amenity": "cafe",
     "cuisine": "american;coffee_shop",
+    "diet:halal": "no",
+    "diet:kosher": "no",
     "name": "Round",
     "outdoor_seating": "yes"
   }
@@ -84949,6 +84883,86 @@
     "amenity": "cafe",
     "operator": "https://www.oravivillage.com/fi/Oravi/Ravintola-Ruukinranta",
     "snowmobile": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9488769644,
+  "lat": 60.0514921,
+  "lon": 30.4503180,
+  "tags": {
+    "amenity": "cafe",
+    "cuisine": "georgian",
+    "name": "Пурпур"
+  }
+},
+{
+  "type": "node",
+  "id": 9490028586,
+  "lat": 63.8265611,
+  "lon": 20.2582740,
+  "tags": {
+    "addr:city": "Umeå",
+    "addr:housenumber": "46",
+    "addr:postcode": "90326",
+    "addr:street": "Kungsgatan",
+    "addr:unit": "B",
+    "amenity": "cafe",
+    "name": "Costas Of Sweden",
+    "opening_hours": "Mo-Fr 11:00-16:00",
+    "website": "https://costasofsweden.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 9492519315,
+  "lat": 60.4916602,
+  "lon": 26.5444456,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kyläkahvila Onni"
+  }
+},
+{
+  "type": "node",
+  "id": 9498590686,
+  "lat": 60.9417680,
+  "lon": 26.6182133,
+  "tags": {
+    "addr:city": "Voikkaa",
+    "addr:housenumber": "1",
+    "addr:postcode": "45910",
+    "addr:street": "Voikkaantie",
+    "amenity": "cafe",
+    "name": "Kahvila Kuppi"
+  }
+},
+{
+  "type": "node",
+  "id": 9501475195,
+  "lat": 59.9391600,
+  "lon": 30.3637220,
+  "tags": {
+    "amenity": "cafe",
+    "contact:instagram": "https://www.instagram.com/zoethebakery/",
+    "cuisine": "coffee_shop;donut;bagel",
+    "description": "Кафе при пекарне. Завтраки и specialty-кофе.",
+    "dog": "yes",
+    "indoor_seating": "yes",
+    "name": "Зое",
+    "name:en": "Zoe",
+    "name:ru": "Зое",
+    "outdoor_seating": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9501601436,
+  "lat": 60.1643786,
+  "lon": 30.5409689,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Orange"
   }
 }
 

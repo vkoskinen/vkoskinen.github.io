@@ -1,2 +1,5 @@
-osmtogeojson data/fuel.json > data/fuel.geojson
-osmtogeojson data/cafes.json > data/cafe.geojson
+call curl -d "@q1.json" -X POST https://overpass-api.de/api/interpreter -o cafes.json
+call curl -d "@q2.json" -X POST https://overpass-api.de/api/interpreter -o fuels.json
+call osmtogeojson fuels.json > fuel.geojson
+call osmtogeojson cafes.json > cafe.geojson
+
