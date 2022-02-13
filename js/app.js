@@ -13,29 +13,28 @@
 	const style = 'normal.day';
 	
 	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';  //alternative offline layer
-	const urlTemplate = "https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/taustakartta/default/"
-                + "WGS84_Pseudo-Mercator/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
+	//const urlTemplate = "https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/taustakartta/default/" + "WGS84_Pseudo-Mercator/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
 	//const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
 
-	function showTileList() {
-	LeafletOffline.getStorageInfo(urlTemplate).then((r) => {
-		const list = document.getElementById('tileinforows');
-		list.innerHTML = '';
-		for (let i = 0; i < r.length; i += 1) {
-		const createdAt = new Date(r[i].createdAt);
-		list.insertAdjacentHTML(
-			'beforeend',
-			`<tr><td>${i}</td><td>${r[i].url}</td><td>${
-			r[i].key
-			}</td><td>${createdAt.toDateString()}</td></tr>`,
-		);
-		}
-	});
-	}
+	// function showTileList() {
+	// LeafletOffline.getStorageInfo(urlTemplate).then((r) => {
+	// 	const list = document.getElementById('tileinforows');
+	// 	list.innerHTML = '';
+	// 	for (let i = 0; i < r.length; i += 1) {
+	// 	const createdAt = new Date(r[i].createdAt);
+	// 	list.insertAdjacentHTML(
+	// 		'beforeend',
+	// 		`<tr><td>${i}</td><td>${r[i].url}</td><td>${
+	// 		r[i].key
+	// 		}</td><td>${createdAt.toDateString()}</td></tr>`,
+	// 	);
+	// 	}
+	// });
+	// }
 
-	$('#storageModal').on('show.bs.modal', () => {
-	showTileList();
-	});
+	// $('#storageModal').on('show.bs.modal', () => {
+	// showTileList();
+	// });
 
 	var map = L.map('map', {
 		center: [65.425,27.510],
@@ -59,15 +58,15 @@
 
 	
 	// offline baselayer, will use offline source if available
-	const baseLayer = L.tileLayer
-	.offline(urlTemplate, {
-		attribution: 'Map data {attribution.OpenStreetMap}',
-		//subdomains: 'abc',
-		minZoom: 12,
-		//maxZoom: 7,
-		saveOnLoad: false,
-		downsample: false
-	});
+	// const baseLayer = L.tileLayer
+	// .offline(urlTemplate, {
+	// 	attribution: 'Map data {attribution.OpenStreetMap}',
+	// 	//subdomains: 'abc',
+	// 	minZoom: 12,
+	// 	//maxZoom: 7,
+	// 	saveOnLoad: false,
+	// 	downsample: false
+	// });
 
 	var myRenderer = L.canvas({ padding: 0.5, tolerance: 20 });
 
@@ -434,65 +433,65 @@
 	
 	
 	// add buttons to save tiles in area viewed
-	const control = L.control.savetiles(baseLayer, {
-	//zoomlevels: [13, 16], // optional zoomlevels to save, default current zoomlevel,
-	confirm(layer, successCallback) {
-		// eslint-disable-next-line no-alert
-		if (window.confirm(`Save ${layer._tilesforSave.length}`)) {
-		successCallback();
-		}
-	},
-	confirmRemoval(layer, successCallback) {
-		// eslint-disable-next-line no-alert
-		if (window.confirm('Remove all the tiles?')) {
-		successCallback();
-		}
-	},
-	saveText:
-		'<i class="fa fa-download" aria-hidden="true" title="Save tiles"></i>',
-	rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
-	});
+	// const control = L.control.savetiles(baseLayer, {
+	// //zoomlevels: [13, 16], // optional zoomlevels to save, default current zoomlevel,
+	// confirm(layer, successCallback) {
+	// 	// eslint-disable-next-line no-alert
+	// 	if (window.confirm(`Save ${layer._tilesforSave.length}`)) {
+	// 	successCallback();
+	// 	}
+	// },
+	// confirmRemoval(layer, successCallback) {
+	// 	// eslint-disable-next-line no-alert
+	// 	if (window.confirm('Remove all the tiles?')) {
+	// 	successCallback();
+	// 	}
+	// },
+	// saveText:
+	// 	'<i class="fa fa-download" aria-hidden="true" title="Save tiles"></i>',
+	// rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
+	// });
 
-	//layer switcher control
-	const layerswitcher = L.control.layers(
-		null, 
-		overlays, 
-		{ collapsed: true }
-	).addTo(map);
+	// //layer switcher control
+	// const layerswitcher = L.control.layers(
+	// 	null, 
+	// 	overlays, 
+	// 	{ collapsed: true }
+	// ).addTo(map);
 	
-	let storageLayer;
+	// let storageLayer;
 
-	const getGeoJsonData = () => LeafletOffline.getStorageInfo(urlTemplate)
-	.then((data) => LeafletOffline.getStoredTilesAsJson(baseLayer, data));
+	// const getGeoJsonData = () => LeafletOffline.getStorageInfo(urlTemplate)
+	// .then((data) => LeafletOffline.getStoredTilesAsJson(baseLayer, data));
 
-	const addStorageLayer = () => {
-	getGeoJsonData().then((geojson) => {
-		storageLayer = L.geoJSON(geojson)//.bindPopup(
-		//(clickedLayer) => clickedLayer.feature.properties.key,
-		//);
-		layerswitcher.addOverlay(storageLayer, 'Offline tiilet');
-	});
-	};
+	// const addStorageLayer = () => {
+	// getGeoJsonData().then((geojson) => {
+	// 	storageLayer = L.geoJSON(geojson)//.bindPopup(
+	// 	//(clickedLayer) => clickedLayer.feature.properties.key,
+	// 	//);
+	// 	layerswitcher.addOverlay(storageLayer, 'Offline tiilet');
+	// });
+	// };
 
-	addStorageLayer();
+	// addStorageLayer();
 
-	baseLayer.on('storagesize', (e) => {
-	if (storageLayer) {
-		storageLayer.clearLayers();
-		getGeoJsonData().then((data) => {
-		storageLayer.addData(data);
-		});
-	}
-	});
+	// baseLayer.on('storagesize', (e) => {
+	// if (storageLayer) {
+	// 	storageLayer.clearLayers();
+	// 	getGeoJsonData().then((data) => {
+	// 	storageLayer.addData(data);
+	// 	});
+	// }
+	// });
 
-	// events while saving a tile layer
-	let progress;
-	baseLayer.on('savestart', (e) => {
-	progress = 0;
-	});
-	baseLayer.on('savetileend', () => {
-	progress += 1;
-	});
+	// // events while saving a tile layer
+	// let progress;
+	// baseLayer.on('savestart', (e) => {
+	// progress = 0;
+	// });
+	// baseLayer.on('savetileend', () => {
+	// progress += 1;
+	// });
 
 	// locate
 	lc = L.control.locate({
@@ -748,16 +747,16 @@
 		} 
 	});
 
-	map.on('moveend',
-		function () {
-			if (map.getZoom() >= 14) {
-				map.addControl(control);
-			}
-			if (map.getZoom() < 14) {
-				map.removeControl(control);
-			}
-		}
-	);
+	// map.on('moveend',
+	// 	function () {
+	// 		if (map.getZoom() >= 14) {
+	// 			map.addControl(control);
+	// 		}
+	// 		if (map.getZoom() < 14) {
+	// 			map.removeControl(control);
+	// 		}
+	// 	}
+	// );
 
 	// attributions
 	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
