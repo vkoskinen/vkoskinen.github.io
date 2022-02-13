@@ -452,12 +452,12 @@
 	// rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
 	// });
 
-	// //layer switcher control
-	// const layerswitcher = L.control.layers(
-	// 	null, 
-	// 	overlays, 
-	// 	{ collapsed: true }
-	// ).addTo(map);
+	//layer switcher control
+	const layerswitcher = L.control.layers(
+		null, 
+		overlays, 
+		{ collapsed: true }
+	).addTo(map);
 	
 	// let storageLayer;
 
