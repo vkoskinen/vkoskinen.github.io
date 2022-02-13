@@ -40,6 +40,7 @@ typings/
 node_modules/
 app/
 gradle/
+.gradle/
 
 # Optional npm cache directory
 .npm
