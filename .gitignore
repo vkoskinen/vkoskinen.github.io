@@ -41,6 +41,7 @@ node_modules/
 app/
 gradle/
 .gradle/
+play/
 
 # Optional npm cache directory
 .npm
