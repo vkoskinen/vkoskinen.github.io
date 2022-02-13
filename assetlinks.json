@@ -3,4 +3,9 @@
         "target" : { "namespace": "android_app", "package_name": "io.github.vkoskinen.twa",
                      "sha256_cert_fingerprints": ["DD:9A:65:56:87:3F:4A:3D:B7:3A:0B:78:DA:AA:9B:84:BC:81:0C:FF:D9:3B:E4:73:84:3B:A1:9F:9D:13:E9:92"] }
       }
+,{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "io.github.vkoskinen.twa",
+                     "sha256_cert_fingerprints": ["EE:B1:10:64:64:14:C4:6B:5C:D7:CF:F0:F5:A8:36:C4:52:DC:CC:8C:08:60:9A:7A:3A:B3:0A:F6:D5:43:E9:7A"] }
+      }
 ]
