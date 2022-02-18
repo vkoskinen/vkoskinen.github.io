@@ -64,7 +64,7 @@
 		attribution: 'Map data {attribution.OpenStreetMap}',
 		//subdomains: 'abc',
 		minZoom: 12,
-		//maxZoom: 7,
+		maxZoom: 7,
 		saveOnLoad: false,
 		downsample: false
 	});
@@ -104,6 +104,13 @@
 		iconAnchor: [13.5, 17.5],
 		popupAnchor: [0, -11]
 	  });
+	
+	var disturbancesIcon = L.icon({
+		iconUrl: 'images/icons8-warning-96.png',
+		iconSize: [27, 31],
+		iconAnchor: [13.5, 17.5],
+		popupAnchor: [0, -11]
+	});
 
 	var stationIcon = new L.Icon({
 		iconUrl: 'js/leaflet-color-markers-master/img/marker-icon-2x-green.png',
@@ -266,7 +273,7 @@
 	  }
 	});
 
-	disturbances = L.esri.featureLayer({
+	disturbancesLines = L.esri.featureLayer({
 		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/1',
 		isModern:true,
 		renderer: myRenderer,
@@ -276,17 +283,63 @@
 			  weight: 7
 			};
 		},
+		pointToLayer: function (feature, latlng) {
+			return L.marker(latlng, {
+			  icon: disturbancesIcon
+			});
+		},
 		onEachFeature: function (feature, layer) {
 			var startTime = new Date(feature.properties.startTime);
 			var endTime = new Date(feature.properties.endTime);
-			var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
-						+ "<br><br>Tarkenne: " + feature.properties.locationDescription
-						+ "<br><br>Ajankohta: " + startTime.toLocaleString();
+			if (feature.properties.comment == null ){
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+  "<br>" + feature.properties.featureName
+				+ "<br><br>Ajankohta: " + startTime.toLocaleString();
+			}
+			else {
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+  "<br>" + feature.properties.featureName
+				+  "<br>" +  feature.properties.comment
+				+ "<br><br>Ajankohta: " + startTime.toLocaleString();
+
+			}
 		layer.bindPopup(spopup,popupOptions);
 	  }
 	});
 
-	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
+	disturbancesPoints = L.esri.featureLayer({
+		url: ' https://services1.arcgis.com/rhs5fjYxdOG1Et61/ArcGIS/rest/services/TrafficMessages/FeatureServer/0',
+		isModern:true,
+		renderer: myRenderer,
+		pointToLayer: function (geojson, latlng) {
+			return L.marker(latlng, {
+			  icon: disturbancesIcon
+			});
+		},
+		onEachFeature: function (feature, layer) {
+			var startTime = new Date(feature.properties.startTime);
+			var endTime = new Date(feature.properties.endTime);
+			if (feature.properties.comment == null ){
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+  "<br>" + feature.properties.featureName
+				+ "<br><br>Ajankohta: " + startTime.toLocaleString();
+			}
+			else {
+				var spopup = "<p><strong>"+ feature.properties.title + "</strong>"
+				+ "<br><br>Tarkenne: " + feature.properties.locationDescription
+				+  "<br>" + feature.properties.featureName
+				+  "<br>" +  feature.properties.comment
+				+ "<br><br>Ajankohta: " + startTime.toLocaleString();
+
+			}
+		layer.bindPopup(spopup,popupOptions);
+	  }
+	});
+
+	disturbancesGroup = L.featureGroup([disturbancesPoints, disturbancesLines]);
 
 	function toGeo() {
 		var xml = document.getElementById('osmxml').value,
@@ -360,27 +413,17 @@
 	);
 
 
-	var MMLUrl = "https://avoin-karttakuva.maanmittauslaitos.fi/vectortiles/taustakartta/wmts/1.0.0/taustakartta/default/v20/WGS84_Pseudo-Mercator/{z}/{x}/{y}.pbf?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
+	L.mapbox.MMLaccessToken = 'api-key=a8a60737-7849-4969-a55e-7b83db77e13a';
 
-	var vectorTileStyling = {
-		vesisto_viiva: {
-			fill: true,
-			weight: 1,
-			fillColor: '#06cccc',
-			color: '#06cccc',
-			fillOpacity: 0.2,
-			opacity: 0.4,
-		}
-	}
+	L.mapbox.accessToken = 'pk.eyJ1IjoidmVzcSIsImEiOiJjazdycjhwNnEwNmhzM3BwY3dzb2VocjB3In0.5v1gD0iaeanchGkPLGt6Rg';
 
-	var mapboxVectorTileOptions = {
-		rendererFactory: L.canvas.tile,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://www.mapbox.com/about/maps/">MapBox</a>',
-		vectorTileLayerStyles: vectorTileStyling,
-		token: 'pk.eyJ1IjoiaXZhbnNhbmNoZXoiLCJhIjoiY2l6ZTJmd3FnMDA0dzMzbzFtaW10cXh2MSJ9.VsWCS9-EAX4_4W1K-nXnsA'
-	};
-
-	//var mapboxPbfLayer = L.vectorGrid.protobuf(MMLUrl,mapboxVectorTileOptions);
+	var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}@2x?access_token=' + L.mapbox.accessToken, {
+       attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+       tileSize: 512,
+       zoomOffset: -1,
+	   iconURL: 'images/mapbox.PNG'
+	   //detectRetina: true
+	});
 
 	var stationsCluster = new L.MarkerClusterGroup({
 		showCoverageOnHover: false,
@@ -404,25 +447,25 @@
 		'Tien päällyste': roadCover,
 		'Nopeusrajoitukset' : speedLimit,
 		'Tietyöt': workingSitesGroup,
-		'Liikennehäiriöt': disturbances,
+		'Liikennehäiriöt': disturbancesGroup,
 		'Mutkareitit': geojson,
 		'Huolto-asemat': stationsCluster,
 		'Kahvilat': cafesCluster,
-		//"MapBox Vector Tiles": mapboxPbfLayer,
+		'Selkokartta': selkokartta,		
 	};
 	
 	var baseUrls = {
 	  'HERE': hereMap,  
 	  'Taustakartta': taustakartta,
 	  'Peruskartta': maastokartta,
-	  'Selkokartta': selkokartta,
+	  'Mapbox': mapbox,
 	};
 
 	var basemaps = [
 		hereMap,
 		maastokartta,
 		taustakartta,
-		selkokartta
+		mapbox
 	];
 
 	map.addControl(L.control.basemaps({
@@ -750,10 +793,10 @@
 
 	map.on('moveend',
 		function () {
-			if (map.getZoom() >= 14) {
+			if (map.getZoom() >= 13) {
 				map.addControl(control);
 			}
-			if (map.getZoom() < 14) {
+			if (map.getZoom() < 13) {
 				map.removeControl(control);
 			}
 		}
