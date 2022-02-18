@@ -2,7 +2,7 @@
     "name":"Motokartat",
     "short_name":"Motokartat",
     "start_url": "index.html",
-    "background_color":"#6dcdb1",
+    "background_color":"#7bd2b8",
     "theme_color":"#009578",
     "display":"standalone",
     "icons":[
