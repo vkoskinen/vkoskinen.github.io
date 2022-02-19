@@ -46,7 +46,7 @@
 	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', 
 		{attribution: '&copy HERE',
 		label: 'Toner Lite',  // optional label used for tooltip,
-		iconURL: 'images/here.PNG'
+		iconURL: 'images/here.webp'
 	})
 	.addTo(map);
 
