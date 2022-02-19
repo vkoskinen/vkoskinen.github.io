@@ -40,9 +40,9 @@
 	var myRenderer = L.canvas({ padding: 0.5, tolerance: 20 });
 
 	// Basemaps
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.PNG' }, attribution='test');
-	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: '../images/taustakartta.PNG'});
-	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: '../images/selkokartta.PNG'});
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.webp' }, attribution='test');
+	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: '../images/taustakartta.webp'});
+	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: '../images/selkokartta.webp'});
 	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', 
 		{attribution: '&copy HERE',
 		label: 'Toner Lite',  // optional label used for tooltip,
@@ -54,7 +54,7 @@
        attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
        tileSize: 512,
        zoomOffset: -1,
-	   iconURL: 'images/mapbox.PNG'
+	   iconURL: 'images/mapbox.webp'
 	   //detectRetina: true
 	});
 
