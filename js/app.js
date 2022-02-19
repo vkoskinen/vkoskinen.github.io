@@ -6,37 +6,15 @@
 	})
 	}
 
+	// API keys
 	const here = {
 		apiKey:'eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8'
 	  }
-	  
 	const style = 'normal.day';
-	
-	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';  //alternative offline layer
-	const urlTemplate = "https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/taustakartta/default/"
-                + "WGS84_Pseudo-Mercator/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
-	//const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
+	L.mapbox.MMLaccessToken = 'api-key=a8a60737-7849-4969-a55e-7b83db77e13a';
+	L.mapbox.accessToken = 'pk.eyJ1IjoidmVzcSIsImEiOiJjazdycjhwNnEwNmhzM3BwY3dzb2VocjB3In0.5v1gD0iaeanchGkPLGt6Rg';
 
-	function showTileList() {
-	LeafletOffline.getStorageInfo(urlTemplate).then((r) => {
-		const list = document.getElementById('tileinforows');
-		list.innerHTML = '';
-		for (let i = 0; i < r.length; i += 1) {
-		const createdAt = new Date(r[i].createdAt);
-		list.insertAdjacentHTML(
-			'beforeend',
-			`<tr><td>${i}</td><td>${r[i].url}</td><td>${
-			r[i].key
-			}</td><td>${createdAt.toDateString()}</td></tr>`,
-		);
-		}
-	});
-	}
-
-	$('#storageModal').on('show.bs.modal', () => {
-	showTileList();
-	});
-
+	// Initialize map
 	var map = L.map('map', {
 		center: [65.425,27.510],
 		zoom: 5,
@@ -45,11 +23,12 @@
 		 zoomControl: false,
 	 });
 
-	 var popup = L.popup({
+	// Custom popup
+	var popup = L.popup({
 		closeButton: true,
 		autoClose: true,
 		className: "custom-popup" 
-	  });
+	});
 
 	var popupOptions =
     {
@@ -57,24 +36,13 @@
       'className' : 'custom-popup'
     };
 
-	
-	// offline baselayer, will use offline source if available
-	const baseLayer = L.tileLayer
-	.offline(urlTemplate, {
-		attribution: 'Map data {attribution.OpenStreetMap}',
-		//subdomains: 'abc',
-		minZoom: 12,
-		maxZoom: 7,
-		saveOnLoad: false,
-		downsample: false
-	});
-
+	// This for make point and line opening easier
 	var myRenderer = L.canvas({ padding: 0.5, tolerance: 20 });
 
+	// Basemaps
 	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.PNG' }, attribution='test');
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: '../images/taustakartta.PNG'});
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: '../images/selkokartta.PNG'});
-
 	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', 
 		{attribution: '&copy HERE',
 		label: 'Toner Lite',  // optional label used for tooltip,
@@ -82,6 +50,15 @@
 	})
 	.addTo(map);
 
+	var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}@2x?access_token=' + L.mapbox.accessToken, {
+       attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+       tileSize: 512,
+       zoomOffset: -1,
+	   iconURL: 'images/mapbox.PNG'
+	   //detectRetina: true
+	});
+
+	// Overlays
 	roadCover = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
     	layers: 'TL137',
         format: 'image/png',
@@ -186,6 +163,7 @@
 
 	workingSitesGroup = L.featureGroup([workingSitesPoints, workingSitesLines]);
 
+	// Highlighting
 	function highlight (layer) {
 		layer.setStyle({
 			weight: 5,
@@ -341,15 +319,6 @@
 
 	disturbancesGroup = L.featureGroup([disturbancesPoints, disturbancesLines]);
 
-	function toGeo() {
-		var xml = document.getElementById('osmxml').value,
-			geojson = osm_geojson.osm2geojson(xml);
-		document.getElementById('geojson').value = JSON.stringify(geojson);
-		console.log(geojson);
-	;}
-
-	//test=toGeo('data/test.xml')
-
 	var stations = new L.GeoJSON.AJAX("data/fuel.geojson", {
 		minZoom: 8,
 		filter: function(feature, layer) {
@@ -412,19 +381,6 @@
 		}}
 	);
 
-
-	L.mapbox.MMLaccessToken = 'api-key=a8a60737-7849-4969-a55e-7b83db77e13a';
-
-	L.mapbox.accessToken = 'pk.eyJ1IjoidmVzcSIsImEiOiJjazdycjhwNnEwNmhzM3BwY3dzb2VocjB3In0.5v1gD0iaeanchGkPLGt6Rg';
-
-	var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}@2x?access_token=' + L.mapbox.accessToken, {
-       attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-       tileSize: 512,
-       zoomOffset: -1,
-	   iconURL: 'images/mapbox.PNG'
-	   //detectRetina: true
-	});
-
 	var stationsCluster = new L.MarkerClusterGroup({
 		showCoverageOnHover: false,
 		maxClusterRadius: 80
@@ -474,8 +430,91 @@
 		tileY: 0,  // tile Y coordinate
 		tileZ: 1   // tile zoom level
 	}));
+
+	
+	// locate
+	lc = L.control.locate({
+		strings: {
+			title: "Oma sijainti"
+		},
+		flyTo:true,
+		showPopup:false,
+		locateOptions: {
+			maxZoom: 15
+		}
+	 }).addTo(map);
+	
+	var materialOptions = {
+        color: "white",
+      };
+
+	// Material zoom control:
+	var materialZoomControl = new L.materialControl.Zoom({ position: "bottomleft", materialOptions: materialOptions});
+	materialZoomControl.addTo(map);
+
+	// Info button
+	var infoButton = L.control.infoButton({
+		linkTitle: 'Motokartat', 
+		title: '<h3>Motokartat<h6><b>Kartta-aineistot (Map data)</b></h6><ul> <li><a href="https://www.here.com/">HERE</a></li><li><a href="https://www.mapbox.com/">Mapbox</a></li><li><a href="https://www.maanmittauslaitos.fi/avoindata-lisenssi-cc40">Maanmittauslaitos Nimeä CC 4.0 -lisenssi</a>: Taustakartta,peruskartta ja selkokartta</a></li><li><a href="https://www.fintraffic.fi/fi/fintraffic/digitraffic-ja-avoin-data">Fintraffic Nimeä 4.0 Kansainvälinen (CC BY 4.0)</a> : Tietyöt ja liikennehäiriöt</a></li><li><a href="https://wiki.openstreetmap.org/wiki/Overpass_API">OpenStreetMap Overpass API</a> : Kahvilat ja huoltoasemat</a></li><li><a href="http://www.moottoripyora.org/keskustelu/showthread.php/274924-Org!-Mutkareittikartta">Moottoripyörät.org</a> : Org! Mutkareittikartta-keskustelu</a></li><li><a href="https://vayla.fi/">Väylävirasto</a>: Tien päällyste ja nopeusrajoitukset, <a href="https://creativecommons.org/licenses/by/4.0/deed.fi">Creative Commons 4.0</a></li><li><a href="https://www.rainviewer.com/">RainViewer</a>: Säädata -animaatio</a></li></ul><h6><b>Lisenssit (Licenses)</b></h6><ul> <li><a href="https://opensource.org/licenses/mit-license.php">MIT-lisenssi</a></li></ul><h6><b>Kirjastot (Libraries)</b></h6><ul> <li>Map by <a href="http://leafletjs.com/"> Leaflet</a></li><li>Fonts by <a href="https://fontawesome.com/">Font Awesome</a></li><li>Icons by <a target="_blank" href="https://icons8.com">Icons8</a></li><li>Routing by <a href="https://www.liedman.net/leaflet-routing-machine/">Leaflet Routing Machine</a> with <a href="https://www.here.com/">HERE</a></li><li>Material controls by <a href="https://github.com/christippett/leaflet-material"> Leaflet material</a></li><li>Mapbox features by <a href="https://www.mapbox.com/"> Mapbox</a> with <a href="https://github.com/mapbox/mapbox-gl-leaflet">Mapbox GL for Leaflet</a></li><li>Clustering with <a href="https://github.com/Leaflet/Leaflet.markercluster"> Markercluster</a></li><li>Esi features with <a href="https://esri.github.io/esri-leaflet/"> Esri for Leaflet</a></li><li>Locating with <a href="https://github.com/domoritz/leaflet-locatecontrol"> Leaflet locate control</a></li><li>Rain viewer by <a href="https://github.com/mwasil/Leaflet.Rainviewer"> Leaflet Rainviewer</a></li><li>Legends with <a href="https://github.com/kartoza/leaflet-wms-legend"> Leaflet Wms legend</a></li><li>Offline features <a href="https://github.com/allartk/leaflet.offline"> Leaflet offline</a></li><li>Restrore view<a href="https://github.com/makinacorpus/Leaflet.RestoreView"> Leaflet RestoreView</a></li><li>Baselayer changer<a href="https://github.com/consbio/Leaflet.Basemaps"> Leaflet Basemaps</a></li><li>Visual click<a href="https://github.com/MazeMap/Leaflet.VisualClick"> Leaflet VisualClick</a></li><li>Info by<a href="https://github.com/Eclipse1979/Leaflet.infoButton"> Leaflet InfoButton</a></li></ul>'
+	}).addTo(map);
+
+	// Rain viewer
+	L.control.rainviewer({ 
+		position: 'topleft',
+		nextButtonText: '>',
+		playStopButtonText: 'Päälle/Pois',
+		prevButtonText: '<',
+		positionSliderLabelText: "Tunti:",
+		opacitySliderLabelText: "Läpinäkyvyys:",
+		animationInterval: 300,
+		opacity: 0.5
+	}).addTo(map);
 	
 	
+	//Layer switcher control
+	const layerswitcher = L.control.layers(
+		null, 
+		overlays, 
+		{ collapsed: true }
+	).addTo(map);
+	
+	//Offline features
+	//const urlTemplate = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';  //alternative offline layer
+	const urlTemplate = "https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/taustakartta/default/"
+                + "WGS84_Pseudo-Mercator/{z}/{y}/{x}.png" + "?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
+	//const urlTemplate = `https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?apiKey=${here.apiKey}&ppi=320`;
+
+	function showTileList() {
+	LeafletOffline.getStorageInfo(urlTemplate).then((r) => {
+		const list = document.getElementById('tileinforows');
+		list.innerHTML = '';
+		for (let i = 0; i < r.length; i += 1) {
+		const createdAt = new Date(r[i].createdAt);
+		list.insertAdjacentHTML(
+			'beforeend',
+			`<tr><td>${i}</td><td>${r[i].url}</td><td>${
+			r[i].key
+			}</td><td>${createdAt.toDateString()}</td></tr>`,
+		);
+		}
+	});
+	}
+
+	$('#storageModal').on('show.bs.modal', () => {
+	showTileList();
+	});
+	
+	// offline baselayer, will use offline source if available
+	const baseLayer = L.tileLayer
+	.offline(urlTemplate, {
+		attribution: 'Map data {attribution.OpenStreetMap}',
+		//subdomains: 'abc',
+		minZoom: 12,
+		maxZoom: 7,
+		saveOnLoad: false,
+		downsample: false
+	});
+
 	// add buttons to save tiles in area viewed
 	const control = L.control.savetiles(baseLayer, {
 	//zoomlevels: [13, 16], // optional zoomlevels to save, default current zoomlevel,
@@ -496,13 +535,6 @@
 	rmText: '<i class="fa fa-trash" aria-hidden="true"  title="Remove tiles"></i>',
 	});
 
-	//layer switcher control
-	const layerswitcher = L.control.layers(
-		null, 
-		overlays, 
-		{ collapsed: true }
-	).addTo(map);
-	
 	let storageLayer;
 
 	const getGeoJsonData = () => LeafletOffline.getStorageInfo(urlTemplate)
@@ -536,46 +568,6 @@
 	baseLayer.on('savetileend', () => {
 	progress += 1;
 	});
-
-	// locate
-	lc = L.control.locate({
-		strings: {
-			title: "Oma sijainti"
-		},
-		flyTo:true,
-		showPopup:false,
-		locateOptions: {
-			maxZoom: 15
-		}
-	 }).addTo(map);
-	
-	//map.zoomControl.setPosition('bottomleft');
-
-	var materialOptions = {
-        color: "white",
-      };
-
-      // Material zoom control:
-      var materialZoomControl = new L.materialControl.Zoom({ position: "bottomleft", materialOptions: materialOptions});
-      materialZoomControl.addTo(map);
-
-	// info button
-	var infoButton = L.control.infoButton({
-		linkTitle: 'Motokartat', 
-		title: '<h3>Motokartat<h6><b>Kartta-aineistot (Map data)</b></h6><ul> <li><a href="https://www.here.com/">HERE</a></li><li><a href="https://www.mapbox.com/">Mapbox</a></li><li><a href="https://www.maanmittauslaitos.fi/avoindata-lisenssi-cc40">Maanmittauslaitos Nimeä CC 4.0 -lisenssi</a>: Taustakartta,peruskartta ja selkokartta</a></li><li><a href="https://www.fintraffic.fi/fi/fintraffic/digitraffic-ja-avoin-data">Fintraffic Nimeä 4.0 Kansainvälinen (CC BY 4.0)</a> : Tietyöt ja liikennehäiriöt</a></li><li><a href="https://wiki.openstreetmap.org/wiki/Overpass_API">OpenStreetMap Overpass API</a> : Kahvilat ja huoltoasemat</a></li><li><a href="http://www.moottoripyora.org/keskustelu/showthread.php/274924-Org!-Mutkareittikartta">Moottoripyörät.org</a> : Org! Mutkareittikartta-keskustelu</a></li><li><a href="https://vayla.fi/">Väylävirasto</a>: Tien päällyste ja nopeusrajoitukset, <a href="https://creativecommons.org/licenses/by/4.0/deed.fi">Creative Commons 4.0</a></li><li><a href="https://www.rainviewer.com/">RainViewer</a>: Säädata -animaatio</a></li></ul><h6><b>Lisenssit (Licenses)</b></h6><ul> <li><a href="https://opensource.org/licenses/mit-license.php">MIT-lisenssi</a></li></ul><h6><b>Kirjastot (Libraries)</b></h6><ul> <li>Map by <a href="http://leafletjs.com/"> Leaflet</a></li><li>Fonts by <a href="https://fontawesome.com/">Font Awesome</a></li><li>Icons by <a target="_blank" href="https://icons8.com">Icons8</a></li><li>Routing by <a href="https://www.liedman.net/leaflet-routing-machine/">Leaflet Routing Machine</a> with <a href="https://www.here.com/">HERE</a></li><li>Material controls by <a href="https://github.com/christippett/leaflet-material"> Leaflet material</a></li><li>Mapbox features by <a href="https://www.mapbox.com/"> Mapbox</a> with <a href="https://github.com/mapbox/mapbox-gl-leaflet">Mapbox GL for Leaflet</a></li><li>Clustering with <a href="https://github.com/Leaflet/Leaflet.markercluster"> Markercluster</a></li><li>Esi features with <a href="https://esri.github.io/esri-leaflet/"> Esri for Leaflet</a></li><li>Locating with <a href="https://github.com/domoritz/leaflet-locatecontrol"> Leaflet locate control</a></li><li>Rain viewer by <a href="https://github.com/mwasil/Leaflet.Rainviewer"> Leaflet Rainviewer</a></li><li>Legends with <a href="https://github.com/kartoza/leaflet-wms-legend"> Leaflet Wms legend</a></li><li>Offline features <a href="https://github.com/allartk/leaflet.offline"> Leaflet offline</a></li><li>Restrore view<a href="https://github.com/makinacorpus/Leaflet.RestoreView"> Leaflet RestoreView</a></li><li>Baselayer changer<a href="https://github.com/consbio/Leaflet.Basemaps"> Leaflet Basemaps</a></li><li>Visual click<a href="https://github.com/MazeMap/Leaflet.VisualClick"> Leaflet VisualClick</a></li><li>Info by<a href="https://github.com/Eclipse1979/Leaflet.infoButton"> Leaflet InfoButton</a></li></ul>'
-	}).addTo(map);
-
-	// rain viewer
-	L.control.rainviewer({ 
-		position: 'topleft',
-		nextButtonText: '>',
-		playStopButtonText: 'Päälle/Pois',
-		prevButtonText: '<',
-		positionSliderLabelText: "Tunti:",
-		opacitySliderLabelText: "Läpinäkyvyys:",
-		animationInterval: 300,
-		opacity: 0.5
-	}).addTo(map);
 	
 	// Controls for routing	
 	// Clear
@@ -765,7 +757,7 @@
 		return div;
 	};
 
-	// event listening
+	// Event listening for legends
 	map.on('overlayadd', function (eventLayer) {
 		if (eventLayer.name === 'Nopeusrajoitukset') {
 			speedLimitLegend.addTo(map);
@@ -790,6 +782,7 @@
 		} 
 	});
 
+	// Event listening for offline controls
 	map.on('moveend',
 		function () {
 			if (map.getZoom() >= 13) {
@@ -801,7 +794,7 @@
 		}
 	);
 
-	// attributions
+	// Attributions
 	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
 
 	if (!map.restoreView()) {
