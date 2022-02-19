@@ -1,8 +1,8 @@
 {
   "version": 0.6,
-  "generator": "Overpass API 0.7.57 93a4d346",
+  "generator": "Overpass API 0.7.57.1 74a55df1",
   "osm3s": {
-    "timestamp_osm_base": "2022-02-13T12:25:55Z",
+    "timestamp_osm_base": "2022-02-19T14:29:39Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -765,7 +765,9 @@
     "amenity": "cafe",
     "diet:halal": "no",
     "diet:kosher": "no",
-    "name": "Nurmi & Sulonen"
+    "name": "Nurmi & Sulonen",
+    "opening_hours": "Mo-Fr 08:00-17:00",
+    "website": "https://nurmisulonen.fi/myymala-kahvilat/"
   }
 },
 {
@@ -1455,6 +1457,7 @@
     "internet_access:fee": "no",
     "name": "Kirjakahvila",
     "name:sv": "Bokcafé",
+    "opening_hours": "Mo-Fr 12:00-18:00",
     "provides": "food+drink;culture;learning_opportunities;community;participation",
     "website": "http://www.kirjakahvila.org/"
   }
@@ -5394,22 +5397,6 @@
     "payment:visa_electron": "yes",
     "phone": "+7 812 9830880",
     "website": "http://www.schastye.com/"
-  }
-},
-{
-  "type": "node",
-  "id": 661268150,
-  "lat": 60.4513068,
-  "lon": 22.2810414,
-  "tags": {
-    "addr:housenumber": "12",
-    "addr:street": "Hämeenkatu",
-    "amenity": "cafe",
-    "diet:halal": "no",
-    "diet:kosher": "no",
-    "internet_access": "terminal",
-    "name": "Cybercafe",
-    "url": "http://www.cybercafe.fi/fi/cyber_hameenkatu12.html"
   }
 },
 {
@@ -12664,6 +12651,8 @@
     "addr:country": "FI",
     "alcohol": "yes",
     "amenity": "cafe",
+    "diet:halal": "no",
+    "diet:kosher": "no",
     "high_chair": "yes",
     "name": "Uunisaari",
     "url": "http://www.uunisaari.com/"
@@ -13827,8 +13816,8 @@
 {
   "type": "node",
   "id": 1456038425,
-  "lat": 60.4584304,
-  "lon": 26.9503399,
+  "lat": 60.4582883,
+  "lon": 26.9506346,
   "tags": {
     "addr:street": "Meriniementie",
     "amenity": "cafe",
@@ -19807,6 +19796,7 @@
   "tags": {
     "addr:city": "Elimäki",
     "addr:housename": "viljamakasiini",
+    "addr:housenumber": "30",
     "addr:postcode": "47200",
     "addr:street": "Mustilan puistotie",
     "amenity": "cafe",
@@ -41119,7 +41109,7 @@
     "name": "Domcafé",
     "opening_hours": "Mo-Fr 11:00-16:00; Sa-Su 11:00-15:00",
     "phone": "+358 40 341 7109",
-    "website": "https://www.turunseurakunnat.fi/kirkot-ja-kappelit/turun-tuomiokirkko/domcafe"
+    "website": "https://www.turuntuomiokirkko.fi/domcaf%C3%A9"
   }
 },
 {
@@ -41550,7 +41540,8 @@
     "cuisine": "regional",
     "name": "Пельменная №1",
     "opening_hours": "Mo-Su 09:00-21:00",
-    "operator": "Пельменная №1"
+    "operator": "Пельменная №1",
+    "wheelchair": "no"
   }
 },
 {
@@ -47792,6 +47783,23 @@
 },
 {
   "type": "node",
+  "id": 4849210840,
+  "lat": 59.9300677,
+  "lon": 30.3252341,
+  "tags": {
+    "addr:city": "Санкт-Петербург",
+    "addr:housenumber": "21",
+    "addr:street": "Садовая улица",
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "internet_access:ssid": "Not For Sale",
+    "name": "Not For Sale",
+    "website": "https://notforsalestudios.com"
+  }
+},
+{
+  "type": "node",
   "id": 4849823798,
   "lat": 61.1973397,
   "lon": 27.6827420,
@@ -50332,6 +50340,7 @@
   "lon": 29.8626828,
   "tags": {
     "amenity": "cafe",
+    "name": "Коптильщики",
     "opening_hours": "Mo-Su 10:00-22:00"
   }
 },
@@ -53966,8 +53975,8 @@
 {
   "type": "node",
   "id": 5413109199,
-  "lat": 63.1218579,
-  "lon": 27.3820302,
+  "lat": 63.1218451,
+  "lon": 27.3820255,
   "tags": {
     "amenity": "cafe",
     "name": "SEO Kinnulanlahti",
@@ -56570,7 +56579,8 @@
     "name:en": "British bakery",
     "name:ru": "Британские пекарни",
     "opening_hours": "Mo-Fr 08:00-22:00; Sa-Su 09:00-22:00",
-    "takeaway": "yes"
+    "takeaway": "yes",
+    "wheelchair": "limited"
   }
 },
 {
@@ -61156,15 +61166,6 @@
     "smoking": "no",
     "website": "https://www.unica.fi/fi/ravintolat/delica/",
     "wheelchair": "yes"
-  }
-},
-{
-  "type": "node",
-  "id": 6103217156,
-  "lat": 59.6248192,
-  "lon": 30.3939530,
-  "tags": {
-    "amenity": "cafe"
   }
 },
 {
@@ -65828,7 +65829,7 @@
 {
   "type": "node",
   "id": 6638796625,
-  "lat": 59.9092201,
+  "lat": 59.9092399,
   "lon": 30.3433467,
   "tags": {
     "amenity": "cafe",
@@ -66783,6 +66784,24 @@
   "tags": {
     "amenity": "cafe",
     "name": "Кофе"
+  }
+},
+{
+  "type": "node",
+  "id": 6786895827,
+  "lat": 59.9558384,
+  "lon": 30.3522019,
+  "tags": {
+    "addr:city": "Санкт-Петербург",
+    "addr:housenumber": "45",
+    "addr:street": "улица Комсомола",
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-20:00;Sa-Su 09:00-20:00"
   }
 },
 {
@@ -69133,6 +69152,22 @@
     "operator": "ИП Павлов Андрей Петрович",
     "takeaway": "only",
     "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7079729438,
+  "lat": 59.9434806,
+  "lon": 30.2751372,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Sa 08:15-20:30;Su 09:00-20:30",
+    "shop": "outdoor"
   }
 },
 {
@@ -75201,7 +75236,9 @@
   "tags": {
     "amenity": "cafe",
     "cuisine": "georgian",
-    "name": "Pshaveli хинкали бар"
+    "name": "Pshaveli хинкали бар",
+    "opening_hours": "Mo-Su 12:00-24:00",
+    "wheelchair": "no"
   }
 },
 {
@@ -75212,7 +75249,9 @@
   "tags": {
     "amenity": "cafe",
     "cuisine": "pizza",
-    "name": "Мастер и Маргарита"
+    "name": "Мастер и Маргарита",
+    "opening_hours": "Fr,Sa 12:00-01:00, Su-Th 12:00-23:00",
+    "wheelchair": "no"
   }
 },
 {
@@ -75497,7 +75536,12 @@
   "lon": 30.3208990,
   "tags": {
     "amenity": "cafe",
-    "name": "Umami"
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
   }
 },
 {
@@ -75544,6 +75588,26 @@
     "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00",
     "operator": "ИП Тюрин Алексей",
     "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 8006902367,
+  "lat": 59.8627546,
+  "lon": 30.3202754,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:facebook": "https://facebook.com/bagginscoffee/",
+    "contact:instagram": "https://instagram.com/baggins_coffee/",
+    "contact:phone": "+7 800 6007015",
+    "contact:vk": "https://vk.com/bagginscoffee",
+    "contact:website": "http://bagginscoffee.com/",
+    "contact:youtube": "https://youtube.com/channel/UCBVX0L_WSz9Wr3mF8xcCXyw",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00",
+    "operator": "ИП Елсукова Юлия"
   }
 },
 {
@@ -76022,7 +76086,7 @@
     "contact:website": "http://bagginscoffee.com/",
     "cuisine": "coffee_shop",
     "name": "Baggins Coffee",
-    "opening_hours": "Mo-Fr 08:00-20:00;Sa-Su 10:00-18:00"
+    "opening_hours": "Mo-Fr 08:00-20:00"
   }
 },
 {
@@ -76037,8 +76101,9 @@
     "amenity": "cafe",
     "contact:email": "info@bagginscoffee.ru",
     "contact:phone": "+7 800 6007015",
-    "contact:website": "http://www.bagginscoffee.com/",
-    "name": "Coffee Therapy",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
     "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
   }
 },
@@ -77849,7 +77914,7 @@
     "contact:youtube": "https://youtube.com/channel/UCBVX0L_WSz9Wr3mF8xcCXyw",
     "cuisine": "coffee_shop",
     "name": "Baggins Coffee",
-    "opening_hours": "Mo-Su 08:00-22:00",
+    "opening_hours": "Mo-Su 09:00-22:00",
     "operator": "ИП Аксенова"
   }
 },
@@ -80592,6 +80657,7 @@
     "diet:kosher": "no",
     "name": "Café Pegasus",
     "opening_date": "2021-07-01",
+    "opening_hours": "Tu-Su 11:00-18:00",
     "postal_code": "20100",
     "website": "https://www.kahvila-otava.fi/cafe-pegasus",
     "wheelchair": "yes"
@@ -81418,6 +81484,21 @@
 },
 {
   "type": "node",
+  "id": 8938849400,
+  "lat": 59.9341062,
+  "lon": 30.3333619,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-22:00"
+  }
+},
+{
+  "type": "node",
   "id": 8938849401,
   "lat": 59.9270736,
   "lon": 30.3305965,
@@ -81882,7 +81963,7 @@
     "contact:website": "http://bagginscoffee.com/",
     "cuisine": "coffee_shop",
     "name": "Baggins Coffee",
-    "opening_hours": "Mo-Fr 08:00-22:30;Sa-Su 09:00-22:30"
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-22:00"
   }
 },
 {
@@ -84409,9 +84490,12 @@
   "tags": {
     "addr:city": "Санкт-Петербург",
     "addr:housenumber": "104",
+    "addr:street": "Большой проспект П.С.",
     "amenity": "cafe",
     "brand": "Цех85",
-    "name": "Цех85"
+    "name": "Цех85",
+    "opening_hours": "Mo-Fr 07:00-22:00; Sa,Su 09:00-22:00",
+    "wheelchair": "no"
   }
 },
 {
@@ -84755,6 +84839,8 @@
   "lon": 24.9729262,
   "tags": {
     "amenity": "cafe",
+    "diet:halal": "no",
+    "diet:kosher": "no",
     "name": "Helsingin Kahvipaahtimon Päiväkahvibaari"
   }
 },
@@ -84963,6 +85049,447 @@
   "tags": {
     "amenity": "cafe",
     "name": "Orange"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157627,
+  "lat": 59.9237390,
+  "lon": 30.2442540,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157628,
+  "lat": 59.8552595,
+  "lon": 30.2043584,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Fr 08:00-21:00;Mo-Th,Sa-Su 08:00-21:30"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157629,
+  "lat": 59.9482399,
+  "lon": 30.2349946,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157630,
+  "lat": 59.9745964,
+  "lon": 30.3163809,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157631,
+  "lat": 59.9166047,
+  "lon": 30.5108892,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157632,
+  "lat": 59.8787733,
+  "lon": 29.9188614,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157633,
+  "lat": 59.9405207,
+  "lon": 30.4108037,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Sa 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157634,
+  "lat": 60.0410990,
+  "lon": 30.2216170,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157635,
+  "lat": 59.9302173,
+  "lon": 30.4012218,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-19:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157636,
+  "lat": 59.8115945,
+  "lon": 30.3641081,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157637,
+  "lat": 59.8245507,
+  "lon": 30.3374550,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157638,
+  "lat": 59.9897309,
+  "lon": 30.2025613,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 07:30-21:30;Sa-Su 08:30-21:30"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157639,
+  "lat": 60.0529230,
+  "lon": 30.3371400,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 07:00-21:30;Sa-Su 09:00-24:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157640,
+  "lat": 59.9382410,
+  "lon": 30.2306680,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 09:00-22:00;Sa-Su 10:00-22:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157641,
+  "lat": 59.9932880,
+  "lon": 30.3569900,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157642,
+  "lat": 59.9009093,
+  "lon": 30.3114295,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157643,
+  "lat": 59.8097940,
+  "lon": 30.0810400,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 10:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157644,
+  "lat": 59.8483960,
+  "lon": 30.1528250,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:30;Sa-Su 09:00-21:30"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157645,
+  "lat": 59.9817850,
+  "lon": 30.3552850,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157646,
+  "lat": 59.9318040,
+  "lon": 30.2913290,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157647,
+  "lat": 59.9006685,
+  "lon": 30.5126622,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157648,
+  "lat": 59.9062960,
+  "lon": 30.5236459,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157649,
+  "lat": 59.9444400,
+  "lon": 30.3860160,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157650,
+  "lat": 59.8686770,
+  "lon": 30.1555290,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-21:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157651,
+  "lat": 60.0064550,
+  "lon": 30.2104710,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157652,
+  "lat": 60.0352620,
+  "lon": 30.2490730,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157653,
+  "lat": 59.8339882,
+  "lon": 30.2047178,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-22:00;Sa-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9504157654,
+  "lat": 59.9616517,
+  "lon": 30.4620785,
+  "tags": {
+    "amenity": "cafe",
+    "contact:email": "info@bagginscoffee.ru",
+    "contact:phone": "+7 800 6007015",
+    "contact:website": "http://bagginscoffee.com/",
+    "cuisine": "coffee_shop",
+    "name": "Baggins Coffee",
+    "opening_hours": "Mo-Fr 08:00-19:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9505181658,
+  "lat": 59.9391731,
+  "lon": 30.2845470,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Mer Kaffe",
+    "opening_hours": "08:30-23:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9508996655,
+  "lat": 62.2476460,
+  "lon": 24.4586803,
+  "tags": {
+    "amenity": "cafe",
+    "outdoor_seating": "yes"
   }
 }
 

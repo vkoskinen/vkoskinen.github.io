@@ -12,27 +12,40 @@
 
 	<!-- PWA manifest -->
     <link rel="manifest" href="manifest.json">
-	
-	<!-- Load Leaflet -->
-    <link rel="stylesheet" href="js/leaflet/dist/leaflet.css"/>
-    <script src="js/leaflet/dist/leaflet.js"></script>
 
-	<!-- Material controls-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Roboto" />
-
+	<!-- Styles -->
+	<link rel="stylesheet" href="js/leaflet/dist/leaflet.css"/>
     <link href="js/leaflet-material-controls/dist/leaflet-material.css" rel="stylesheet" />
+	<link rel="stylesheet" href="js/leaflet.markercluster/dist/MarkerCluster.css"/>
+    <link rel="stylesheet" href="js/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+	<link rel="stylesheet" href="js/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+	<link rel="stylesheet" href="js/Leaflet.Rainviewer/Leaflet.Rainviewer-master/leaflet.rainviewer.css"></script>
+	<link rel="stylesheet" href="js/leaflet-wms-legend/leaflet.wmslegend.css" />
+	<link rel="stylesheet" href="js/Leaflet.infoButton/dist/leaflet.infoButton.css" />
+	<link href="js/Leaflet.fullscreen/Leaflet.fullscreen-gh-pages/dist/leaflet.fullscreen.css" rel="stylesheet" />	
+	<link rel="stylesheet" href="js/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+	<link rel="stylesheet" href="js/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<link rel="stylesheet" href="js/leaflet-basemaps/L.Control.Basemaps.css" />
+	<link rel="stylesheet" href="js/leaflet.visualclick/dist/L.VisualClick.css" />
+
+
+</head>
+<body>
+	<div id="map"></div>
+	
+		<!-- Load Leaflet -->
+		<script src="js/leaflet/dist/leaflet.js"></script>
+		<script src="http://d3js.org/topojson.v1.min.js"></script>  
+	
+	<!-- Material controls-->
     <script src="js/mapbox.js/dist/mapbox.js"></script>
     <script src="js/Leaflet.fullscreen/Leaflet.fullscreen-gh-pages/dist/Leaflet.fullscreen.min.js"></script>
 	<script src="js/leaflet-material-controls/dist/leaflet-material.js"></script>
 	
 	<!-- Load proj4 -->
-    <script src="js/proj4/dist/proj4.js"></script>
-	<script src="js/proj4leaflet-refactored.js"></script>
     <script src="js/mmlLayers.js"></script>  
 	
 	<!-- Marker cluster-->
-    <link rel="stylesheet" href="js/leaflet.markercluster/dist/MarkerCluster.css"/>
-    <link rel="stylesheet" href="js/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
     <script src="js/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 
 	<!-- GetFeature -->
@@ -43,35 +56,28 @@
 	<script src="js/esri-leaflet/dist/esri-leaflet.js"></script>
 
 	<!-- Locate -->
-	<link rel="stylesheet" href="js/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 	<script src="js/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
 	<!-- Radar -->
-	<link rel="stylesheet" href="js/Leaflet.Rainviewer/Leaflet.Rainviewer-master/leaflet.rainviewer.css"></script>
 	<script src="js/Leaflet.Rainviewer/Leaflet.Rainviewer-master/leaflet.rainviewer.js"></script>
 
 	<!-- Legend -->
-	<link rel="stylesheet" href="js/leaflet-wms-legend/leaflet.wmslegend.css" />
 	<script src="js/leaflet-wms-legend/leaflet.wmslegend.js"></script>
 
 	<!-- Info button -->
-	<link rel="stylesheet" href="js/Leaflet.infoButton/dist/leaflet.infoButton.css" />
 	<script src="js/Leaflet.infoButton/dist/leaflet.infoButton.js"></script>
 	
 	<!-- FullScreen -->
-	<script src="js/Leaflet.fullscreen/Leaflet.fullscreen-gh-pages/dist/Leaflet.fullscreen.js"></script>
-	<link href="js/Leaflet.fullscreen/Leaflet.fullscreen-gh-pages/dist/leaflet.fullscreen.css" rel="stylesheet" />	
+	<script src="js/Leaflet.fullscreen/Leaflet.fullscreen-gh-pages/dist/Leaflet.fullscreen.min.js"></script>
 
 	<!-- Routing -->
-	<link rel="stylesheet" href="js/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-	<script src="js/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-	<link rel="stylesheet" href="js/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<script src="js/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
 	<script src="js/leaflet-routing-machine/dist/Control.Geocoder.js"></script>
-	<script src="js/leaflet-routing-machine-here/dist/lrm-here.js"></script>
+	<script src="js/leaflet-routing-machine-here/dist/lrm-here.min.js"></script>
 	<script src="https://kit.fontawesome.com/0574a0e91e.js" crossorigin="anonymous"></script>
 
 	<!-- Ajax -->
-	<script src="js/leaflet-ajax/dist/leaflet.ajax.js"></script>
+	<script src="js/leaflet-ajax/dist/leaflet.ajax.min.js"></script>
 
 	<!-- Marker icons -->
 	<script src="js/leaflet-color-markers-master/js/leaflet-color-markers.js"></script>
@@ -84,17 +90,11 @@
 	<script src="js/Leaflet.RestoreView/leaflet.restoreview.js"></script>
 
 	<!-- Base layer changer-->
-	<link rel="stylesheet" href="js/leaflet-basemaps/L.Control.Basemaps.css" />
-	<script src="js/leaflet-basemaps/L.Control.Basemaps.js"></script>
+	<script src="js/leaflet-basemaps/L.Control.Basemaps-min.js"></script>
 
 	<!-- Visual click-->
-	<link rel="stylesheet" href="js/leaflet.visualclick/dist/L.VisualClick.css" />
 	<script src="js/leaflet.visualclick/dist/L.VisualClick.js"></script>
 	
-</head>
-<body>
-	<div id="map"></div>
-	<script src="js/mapbox-gl/dist/mapbox-gl.js"></script>
-	<script src="js/app.js">s</script>
+	<script src="js/app.min.js">s</script>
 </body>
 </html>

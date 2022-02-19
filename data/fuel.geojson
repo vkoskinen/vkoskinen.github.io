@@ -17906,35 +17906,6 @@
 },
 {
   "type": "Feature",
-  "id": "node/534833684",
-  "properties": {
-    "addr:city": "Kotka",
-    "addr:country": "FI",
-    "addr:housenumber": "11",
-    "addr:postcode": "48600",
-    "addr:street": "Vesivallintie",
-    "amenity": "fuel",
-    "brand": "Teboil",
-    "brand:wikidata": "Q7692079",
-    "brand:wikipedia": "en:Teboil",
-    "contact:fax": "+358 5 229 6010",
-    "contact:phone": "+358 5 229 6000",
-    "contact:website": "http://www.teboil.fi/ServiceStation.asp?path=1;1510;1549;1743;7076",
-    "fuel:suljettu": "yes",
-    "name": "Teboil",
-    "operator": "Teboil",
-    "id": "node/534833684"
-  },
-  "geometry": {
-    "type": "Point",
-    "coordinates": [
-      26.9358131,
-      60.514787
-    ]
-  }
-},
-{
-  "type": "Feature",
   "id": "node/535181919",
   "properties": {
     "amenity": "fuel",
@@ -23119,8 +23090,9 @@
     "fuel:95E10": "yes",
     "fuel:98E5": "yes",
     "fuel:diesel": "yes",
-    "name": "ABC Karhula",
+    "name": "ABC autom. Karhula",
     "operator": "ABC",
+    "self_service": "yes",
     "id": "node/894371012"
   },
   "geometry": {
@@ -27745,6 +27717,23 @@
 },
 {
   "type": "Feature",
+  "id": "node/1489587801",
+  "properties": {
+    "amenity": "fuel",
+    "name": "SEO Vieremä",
+    "snowmobile": "yes",
+    "id": "node/1489587801"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      27.0041076,
+      63.7414713
+    ]
+  }
+},
+{
+  "type": "Feature",
   "id": "node/1489589646",
   "properties": {
     "addr:city": "Vieremä",
@@ -28655,8 +28644,8 @@
   "geometry": {
     "type": "Point",
     "coordinates": [
-      27.3819041,
-      63.1219658
+      27.3819088,
+      63.1219601
     ]
   }
 },
@@ -42704,7 +42693,19 @@
   "type": "Feature",
   "id": "node/5779602067",
   "properties": {
+    "addr:city": "Tuusula",
+    "addr:housenumber": "50",
+    "addr:postcode": "04360",
+    "addr:street": "Haarakaari",
     "amenity": "fuel",
+    "brand": "St1",
+    "brand:wikidata": "Q7592214",
+    "brand:wikipedia": "en:St1",
+    "fuel:diesel": "yes",
+    "fuel:octane_95": "yes",
+    "fuel:octane_98": "yes",
+    "name": "St1",
+    "self_service": "yes",
     "id": "node/5779602067"
   },
   "geometry": {
@@ -43760,13 +43761,15 @@
   "properties": {
     "amenity": "fuel",
     "brand": "Shell",
+    "brand:wikidata": "Q110716465",
+    "name": "Shell",
     "id": "node/6512195800"
   },
   "geometry": {
     "type": "Point",
     "coordinates": [
-      28.0917674,
-      63.2006971
+      28.091593,
+      63.2006377
     ]
   }
 },
@@ -45853,8 +45856,8 @@
   "geometry": {
     "type": "Point",
     "coordinates": [
-      21.6341159,
-      63.0992672
+      21.633794,
+      63.0993691
     ]
   }
 },
@@ -46368,8 +46371,8 @@
   "geometry": {
     "type": "Point",
     "coordinates": [
-      21.6128942,
-      63.1154927
+      21.6130378,
+      63.1155211
     ]
   }
 },
@@ -46502,16 +46505,22 @@
   "type": "Feature",
   "id": "node/8901802446",
   "properties": {
+    "addr:city": "Pornainen",
+    "addr:housenumber": "264",
+    "addr:postcode": "07170",
+    "addr:street": "Kirkkotie",
     "amenity": "fuel",
     "name": "Race Point",
-    "note": "Uusi huoltoasema avautumassa kesällä 2021",
+    "opening_hours": "Mo-Fr 07:00-20:00; Sa 09:00-20:00",
+    "start_date": "2022-01-29",
+    "website": "https://www.race.fi/",
     "id": "node/8901802446"
   },
   "geometry": {
     "type": "Point",
     "coordinates": [
-      25.3677233,
-      60.4841551
+      25.3678239,
+      60.4841634
     ]
   }
 },
@@ -47419,8 +47428,8 @@
   "geometry": {
     "type": "Point",
     "coordinates": [
-      22.9273141,
-      61.3336296
+      22.9268259,
+      61.3334186
     ]
   }
 },
@@ -47493,6 +47502,49 @@
     "coordinates": [
       22.3841602,
       63.4831372
+    ]
+  }
+},
+{
+  "type": "Feature",
+  "id": "node/9505358805",
+  "properties": {
+    "addr:city": "Pornainen",
+    "addr:housenumber": "266",
+    "addr:postcode": "07170",
+    "addr:street": "Kirkkotie",
+    "amenity": "fuel",
+    "brand": "SEO",
+    "fuel:diesel": "yes",
+    "fuel:octane_95": "yes",
+    "fuel:octane_98": "yes",
+    "fuel:taxfree_diesel": "yes",
+    "name": "SEO Pornainen",
+    "id": "node/9505358805"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      25.3677395,
+      60.4843178
+    ]
+  }
+},
+{
+  "type": "Feature",
+  "id": "node/9516982035",
+  "properties": {
+    "amenity": "fuel",
+    "brand": "St1",
+    "name": "St1 Automat",
+    "vending_machine": "fuel",
+    "id": "node/9516982035"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      23.8267112,
+      67.3477309
     ]
   }
 }
