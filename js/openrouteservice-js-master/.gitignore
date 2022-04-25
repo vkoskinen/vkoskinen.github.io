@@ -1,0 +1,10 @@
+node_modules/
+tim_tests/
+npm_distribution/
+*~
+/nbproject/
+.DS_Store
+test.html
+spec/test-env.js
+coverage/lcov-report
+.nyc_output

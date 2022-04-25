@@ -1,0 +1,46 @@
+{
+	"name": "@gegeweb/leaflet-routing-machine-openroute",
+	"version": "0.1.10",
+	"description": "A Leaflet plugin that extend Leaflet Routing Machine with support for OpenRoute Service.",
+	"main": "dist/leaflet-routing-openroute.min.js",
+	"module": "src/leaflet-routing-openroute.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "rollup -c build/rollup.config.js",
+		"watch": "rollup -c build/rollup.config.js --watch",
+		"version": "npm run build && git add -A dist"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://framagit.org/gegeweb/leaflet-routing-machine-openroute.git"
+	},
+	"keywords": [
+		"leaflet",
+		"routing",
+		"javascript",
+		"openroute"
+	],
+	"author": {
+		"name": "Gérald Niel",
+		"url": "https://framagit.org/gegeweb/leaflet-routing-machine-openroute/"
+	},
+	"license": "AGPL-3.0",
+	"bugs": {
+		"url": "https://framagit.org/gegeweb/leaflet-routing-machine-openroute/-/issues"
+	},
+	"homepage": "https://framagit.org/gegeweb/leaflet-routing-machine-openroute/-/blob/master/README.md",
+	"devDependencies": {
+		"postcss-copy": "^7.1.0",
+		"postcss-import": "^12.0.1",
+		"rollup": "^2.2.0",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-git-version": "^0.3.1",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"rollup-plugin-postcss": "^2.5.0",
+		"rollup-plugin-terser": "^5.3.0"
+	},
+	"peerDependencies": {
+		"leaflet": "^1.6.0",
+		"leaflet-routing-machine": "^3.2.12"
+	}
+}

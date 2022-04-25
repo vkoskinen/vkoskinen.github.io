@@ -40,7 +40,7 @@
 	var myRenderer = L.canvas({ padding: 0.5, tolerance: 20 });
 
 	// Basemaps
-	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.webp' }, attribution='test');
+	maastokartta= new L.tileLayer.mml_wmts({ layer: "maastokartta", iconURL: '../images/peruskartta.webp' });
 	taustakartta = new L.tileLayer.mml_wmts({ layer: "taustakartta", iconURL: '../images/taustakartta.webp'});
 	selkokartta = new L.tileLayer.mml_wmts({ layer: "selkokartta", iconURL: '../images/selkokartta.webp'});
 	hereMap =  L.tileLayer('https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?apiKey=eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8&ppi=320', 
@@ -687,7 +687,7 @@
 				return container;
 			}
 	});
-			
+	
 	// Create a plan for the routing
 	var plan = new geoPlan(
 		[],
@@ -695,13 +695,20 @@
 			geocoder: new L.Control.Geocoder.Nominatim(),
 			//addWaypoints: false,
 			routeWhileDragging: false,
-			draggableWaypoints: true,
+			draggableWaypoints: false,
 		}),
 		// Routing machine HERE
 		routing = L.Routing.control({
 			waypoints: [],
 			position: 'topright',
 			router: new L.Routing.Here('eXgIn9z6_ajJGIOlSJydOcTe8pa4GzX3Vd_enIhf8q8',{}),
+			// router: new L.Routing.openrouteserviceV2(
+			// 	'5b3ce3597851110001cf6248f61ef7220a88433387c91860bb660a3a',
+			// 	{
+			// 			profile: "driving-car"
+			// 	}
+			// ),
+			draggableWaypoints: false,
 			plan: plan,
 			show: false,
 			hide:true,
@@ -794,6 +801,13 @@
 			}
 		}
 	);
+
+		// ML zoom restriction
+	map.on('moveend', function () {
+		if (map.getZoom() > 15 && map.hasLayer(taustakartta)) {
+			map.setZoom(14);
+		}
+	});
 
 	// Attributions
 	map.attributionControl.addAttribution('<a target="_blank" href="https://icons8.com">Icons8</a>');
