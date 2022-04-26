@@ -13,6 +13,7 @@
 	const style = 'normal.day';
 	L.mapbox.MMLaccessToken = 'api-key=a8a60737-7849-4969-a55e-7b83db77e13a';
 	L.mapbox.accessToken = 'pk.eyJ1IjoidmVzcSIsImEiOiJjazdycjhwNnEwNmhzM3BwY3dzb2VocjB3In0.5v1gD0iaeanchGkPLGt6Rg';
+    //https://avoin-karttakuva.maanmittauslaitos.fi/vectortiles/tilejson/taustakartta/1.0.0/taustakartta/default/v20/WGS84_Pseudo-Mercator/tilejson.json?api-key=
 
 	// Initialize map
 	var map = L.map('map', {
@@ -59,6 +60,28 @@
 	});
 
 	// Overlays
+	var mmlTileStyling = {
+
+		maasto_alue: {
+			fill: true,
+			weight: 1,
+			fillColor: '#FF0000',
+			color: '#06cccc',
+			fillOpacity: 0.2,
+			opacity: 0.4,
+		}
+	};
+
+	var mmlUrl = "https://avoin-karttakuva.maanmittauslaitos.fi/vectortiles/taustakartta/wmts/1.0.0/taustakartta/default/v20/WGS84_Pseudo-Mercator/{z}/{y}/{x}.pbf?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
+
+	var mmlVectorTileOptions = {
+		rendererFactory: L.canvas.tile,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://www.mapbox.com/about/maps/">MapBox</a>',
+		vectorTileLayerStyles: mmlTileStyling
+	};
+
+	var mmlboxPbfLayer = L.vectorGrid.protobuf(mmlUrl, mmlVectorTileOptions);
+
 	roadCover = L.tileLayer.wms("https://julkinen.vayla.fi/inspirepalvelu/avoin/wms?", {
     	layers: 'TL137',
         format: 'image/png',
@@ -408,6 +431,7 @@
 		'Huolto-asemat': stationsCluster,
 		'Kahvilat': cafesCluster,
 		'Selkokartta': selkokartta,		
+		'Vektoritiilet': mmlboxPbfLayer
 	};
 	
 	var baseUrls = {
