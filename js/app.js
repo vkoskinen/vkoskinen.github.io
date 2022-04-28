@@ -58,19 +58,185 @@
 	   //detectRetina: true
 	});
 
+	var gl = L.mapboxGL({
+		accessToken: 'no-token',
+		// get your own MapTiler token at https://cloud.maptiler.com/ or use MapBox style
+		style: 'https://api.maptiler.com/maps/topo/style.json?key=gbetYLSD5vR8MdtZ88AQ'
+	});
+	
+
 	// Overlays
 	var mmlTileStyling = {
-
-		maasto_alue: {
-			fill: true,
-			weight: 1,
-			fillColor: '#FF0000',
-			color: '#06cccc',
-			fillOpacity: 0.2,
-			opacity: 0.4,
-		}
+			'vesisto_alue': function(properties, zoom) {
+				return {
+					weight: 2,
+					stroke: false,
+					opacity: 1,
+					fillColor: 'hsl(200, 80%, 85%)',
+					fill: true,
+					radius: 6,
+					fillOpacity: 0.7
+				}
+			},
+			nimisto: {
+				icon: function (geojson, latlng) {
+					return L.marker(latlng, {
+					  icon: workingSiteIcon
+					});
+				}
+			},
+			'maasto_alue': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'taajamaalue': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maankaytto': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'lentokentta_alue': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'lentokentta_viiva': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'lentokentta_viiva2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'vesisto_alue_reuna': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maastoaluereuna': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'keinotekoinen_rantaviiva': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'vesisto_viiva': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rakennus': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet tunnelissa': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, pinnan alla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, pinnalla': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, sillalla 1': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, sillalla 2': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, sillalla 3': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, sillalla 4': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajotie, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'ajopolku, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'polku, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystamaton, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'kavely- ja pyoratie, paallystetty, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_reuna, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_reuna, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_reuna, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_reuna, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_1a_1b_taytto, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_2a_2b_taytto, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tiet_3a_3b_taytto, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rautatie_taytto, sillalla 5': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'lautta ja lossi': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'laiva ja venevaylat': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'hallintorajat': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rakennelmat': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'tienimet': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'nimisto-maasto-vedet': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'nimisto': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'nimisto_luonnopuistot': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'nimisto_kunnat': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'korkeus': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'liikenne': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'symboli': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maasto_viiva': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'poi': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rakennelma': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maastoaluereuna': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maankaytto': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'vesisto_viiva': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maasto_alue': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'korkeus': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'maasto_piste': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'selite': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'alueraja': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'rakennus': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}},
+			'hallintoalue': function(properties, zoom) {return {fillOpacity: 0,stroke: false,fill: false,opacity: 0,weight: 0,}}
+			// 'maasto_alue': function(properties, zoom) {
+			// 	var pop = properties.kohdeluokka;
+			// 	if (pop >= 1 && pop <= 100000) {
+			// 		return {
+			// 			weight: 1,
+			// 			color: 'brown',
+			// 			opacity: 0.8,
+			// 			fill: true,
+			// 			fillColor: 'brown',
+			// 			stroke: true,
+			// 			fillOpacity: 0.6
+			// 		}
+			// 	} else {
+			// 		return {
+			// 			fillOpacity: 0,
+			// 			stroke: false,
+			// 			fill: false,
+			// 			opacity: 0,
+			// 			weight: 0,
+			// 		}
+			// 	}
+			// }
 	};
-
+	  
 	var mmlUrl = "https://avoin-karttakuva.maanmittauslaitos.fi/vectortiles/taustakartta/wmts/1.0.0/taustakartta/default/v20/WGS84_Pseudo-Mercator/{z}/{y}/{x}.pbf?api-key=a8a60737-7849-4969-a55e-7b83db77e13a";
 
 	var mmlVectorTileOptions = {
