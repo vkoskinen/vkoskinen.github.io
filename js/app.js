@@ -56,14 +56,7 @@
        zoomOffset: -1,
 	   iconURL: 'images/mapbox.webp'
 	   //detectRetina: true
-	});
-
-	var gl = L.mapboxGL({
-		accessToken: 'no-token',
-		// get your own MapTiler token at https://cloud.maptiler.com/ or use MapBox style
-		style: 'https://api.maptiler.com/maps/topo/style.json?key=gbetYLSD5vR8MdtZ88AQ'
-	});
-	
+	});	
 
 	// Overlays
 	var mmlTileStyling = {
