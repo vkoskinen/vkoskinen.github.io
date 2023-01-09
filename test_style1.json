@@ -8,8 +8,8 @@
 		}
 	},
 	"center": [
-		0,
-		0
+		21.645,
+		63.101
 	],
 	"zoom": 3,
 	"sprite": "mapbox://sprites/mapbox/streets-v11",
