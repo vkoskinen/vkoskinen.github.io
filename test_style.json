@@ -1,7 +1,7 @@
 {
 	"version": 8,
-	"name": "Test",	
-		"sources": {
+	"name": "Test",
+	"sources": {
 		"taustakartta": {
 			"type": "vector",
 			"url": "https://avoin-karttakuva.maanmittauslaitos.fi/vectortiles/tilejson/taustakartta/1.0.0/taustakartta/default/v20/WGS84_Pseudo-Mercator/tilejson.json?api-key=a8a60737-7849-4969-a55e-7b83db77e13a"
@@ -14,7 +14,7 @@
 	"zoom": 3,
 	"sprite": "mapbox://sprites/mapbox/streets-v11",
 	"glyphs": "https://avoin-karttakuva.maanmittauslaitos.fi/vectortiles/glyphs/{fontstack}/{range}.pbf?api-key=a8a60737-7849-4969-a55e-7b83db77e13a",
-	"layers": "layers": [
+	"layers": [
 		{
 			"id": "background",
 			"type": "background",
